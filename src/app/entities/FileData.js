@@ -1,3 +1,5 @@
+import {fileTypeFromStream} from 'file-type';
+
 /**
  * Enum for common colors.
  * @readonly
@@ -16,8 +18,10 @@ class FileData {
         this.status = Status.NONE;
         this.file = file;
         this.targetFormat = targetFormat;
+        this.sourceFormat = null;
         this.id = id;
         this.converted = null;
+        this.fileType = null;
     }
 
     getOutputFileName(){
@@ -26,6 +30,30 @@ class FileData {
         const fileRoot = originalFileName.substr(0, pos);
         return `${fileRoot}.${this.targetFormat}`;
     }
+
+    iteratorToStream(iterator) {
+        return new ReadableStream({
+          async pull(controller) {
+            const { value, done } = await iterator.next();
+      
+            if (done) {
+              controller.close();
+            } else {
+              controller.enqueue(value);
+            }
+          },
+        });
+      }
+
+    async getSourceFileType() {
+        console.log(this.file);
+        if(this.sourceFormat || this.file == null) return this.sourceFormat;
+        const result = await fileTypeFromStream(this.file.stream());
+        this.sourceFormat = result;
+        return result;
+        
+    }
+    
 
 }
 export {

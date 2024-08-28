@@ -3,6 +3,8 @@
 // import { fetchFile, toBlobURL } from '@ffmpeg/util';
 import React, { useState, useEffect, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { AiOutlineUpload } from "react-icons/ai";
+
 // src/app/utils/image_convertor
 // import init, {read_file_as_array_buffer,initSync} from './worker/tax_webassembly.js';
 // import { default as initXmlConvetor, convert_xml_to_json} from '../utils/xml2json/pkg/xml2json.js';
@@ -55,9 +57,13 @@ const FileUpload = ({setFiles}) => {
   return (
 
    <> 
-   <div className='w-full h-full' {...getRootProps()}> 
+   <div className='w-full h-full flex items-center justify-center text-base-content' {...getRootProps()}> 
       <input {...getInputProps()} />
-      <p>Drag and drop files here or click to browses.</p>
+      <div className='w-full flex flex-col justify-center items-center space-y-2'>
+      <AiOutlineUpload className='size-12'/>
+      <p className="">Drag and drop files here or click to browses.</p>
+      </div>
+
       <ul>
         {/* {uploadedFiles.map((file) => (
           <li key={file.name}>{file.name}</li>

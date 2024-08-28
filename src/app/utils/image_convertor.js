@@ -4,11 +4,9 @@ import { fetchFile, toBlobURL } from '@ffmpeg/util';
 class ImageConvertor {
 
     async load() {
-        console.log('ariel');
         const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd'
         this.ffmpeg = new FFmpeg();
         this.ffmpeg.on('log', ({ message }) => {
-            // messageRef.current.innerHTML = message;
             console.log(message);
         });
         // toBlobURL is used to bypass CORS issue, urls with the same
@@ -25,7 +23,9 @@ class ImageConvertor {
         var uint8Array =  new Uint8Array(await file.arrayBuffer());
         await this.ffmpeg.writeFile(file.name, uint8Array); 
         await this.ffmpeg.exec(['-i', file.name, fileData.getOutputFileName()]);
-        
+        const sourceFileData =  await this.ffmpeg.exec(['-i', file.name,""]);
+        console.log('fileData',sourceFileData);
+
         const binaryRes = await this.ffmpeg.readFile(fileData.getOutputFileName());
         const blob = new Blob([binaryRes.buffer]);
         return new File([blob], fileData.getOutputFileName(), { type: `image/${fileData.targetFormat}` });

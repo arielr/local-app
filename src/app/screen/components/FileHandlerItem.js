@@ -1,14 +1,27 @@
 
 import { AiOutlineFileImage, AiOutlineDown, AiOutlineClose, AiOutlineRight, AiOutlineDownload,AiOutlineExclamationCircle } from "react-icons/ai";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FileData, Status } from "../../entities/FileData";
 import FileFormat from "../../entities/FileFormat.js";
 
 const target_formats = Object.keys(FileFormat);//["png", "jpg", "jpeg",'ppm','webp    '];
-const FileHandlerItem = ({ fileData,  updateItem }) => {
+const FileHandlerItem = ({ fileData,  updateItem, removeItem }) => {
     const {status, id, targetFormat,file, converted,} = fileData;
     const [selectedFormat, setSelectedFormat] = useState(-1);
+    const [sourceFormat, setSourceFormat] = useState("Unkown");
     
+    
+    useEffect(()=>{
+        if(fileData.file){
+            fileData.getSourceFileType().then((res)=>{
+                console.log(res);
+                if(res?.mime){
+                    setSourceFormat(res?.mime);
+                }
+          
+            });
+        }
+    }, [file]);
     function downloadFile() {
         const url = URL.createObjectURL(converted);
         const a = document.createElement("a");
@@ -36,7 +49,7 @@ const FileHandlerItem = ({ fileData,  updateItem }) => {
             <p className="inline text-primary-content">{file?.name}</p>
         </div>
         <div className="flex-row justify-center space-x-2">
-            <p className="inline text-base-content">{file?.extension}</p>
+            <p className="inline text-base-content">{sourceFormat}</p>
             <AiOutlineRight className="inline text-base-content" />
             <div className="dropdown">
                 <div tabIndex={0} role="button" className="btn m-1">{selectedFormat == -1 ? "..." : target_formats[selectedFormat]}<AiOutlineDown /></div>
@@ -45,7 +58,7 @@ const FileHandlerItem = ({ fileData,  updateItem }) => {
                 </ul>
             </div>
         </div>
-        {status == Status.NONE && <button className="btn btn-square"> <AiOutlineClose className="size-7" /></button>}
+        {status == Status.NONE && <button className="btn btn-square" onClick={()=>removeItem(fileData)}> <AiOutlineClose className="size-7" /></button>}
         {status === Status.PROCESSING && <div className="btn btn-square" > <span className="loading loading-spinner loading-md size-7"></span></div>}
         {status === Status.ERROR  && <div className="btn btn-square" > <AiOutlineExclamationCircle className="size-7"/></div>}
 
