@@ -1,0 +1,10 @@
+/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/wasm32-unknown-unknown/release/deps/libavif_serialize-b257be10d9afc08d.rmeta: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/boxes.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/constants.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/writer.rs
+
+/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/wasm32-unknown-unknown/release/deps/libavif_serialize-b257be10d9afc08d.rlib: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/boxes.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/constants.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/writer.rs
+
+/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/wasm32-unknown-unknown/release/deps/avif_serialize-b257be10d9afc08d.d: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/boxes.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/constants.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/writer.rs
+
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/lib.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/boxes.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/constants.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/avif-serialize-0.8.1/src/writer.rs:

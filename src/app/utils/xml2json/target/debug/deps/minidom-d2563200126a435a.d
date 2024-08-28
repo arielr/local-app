@@ -1,0 +1,10 @@
+/Users/arielroasso/git/frontend-master/src/app/utils/xml2json/target/debug/deps/libminidom-d2563200126a435a.rmeta: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/convert.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/element.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/error.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/namespace_set.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/node.rs
+
+/Users/arielroasso/git/frontend-master/src/app/utils/xml2json/target/debug/deps/minidom-d2563200126a435a.d: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/convert.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/element.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/error.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/namespace_set.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/node.rs
+
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/lib.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/convert.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/element.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/error.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/namespace_set.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/minidom-0.12.0/src/node.rs:

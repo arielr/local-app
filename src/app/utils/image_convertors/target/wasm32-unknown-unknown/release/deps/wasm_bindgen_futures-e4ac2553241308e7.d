@@ -1,0 +1,9 @@
+/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/wasm32-unknown-unknown/release/deps/libwasm_bindgen_futures-e4ac2553241308e7.rmeta: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/queue.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/task/singlethread.rs
+
+/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/wasm32-unknown-unknown/release/deps/libwasm_bindgen_futures-e4ac2553241308e7.rlib: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/queue.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/task/singlethread.rs
+
+/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/wasm32-unknown-unknown/release/deps/wasm_bindgen_futures-e4ac2553241308e7.d: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/queue.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/task/singlethread.rs
+
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/lib.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/queue.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wasm-bindgen-futures-0.4.43/src/task/singlethread.rs:

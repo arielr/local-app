@@ -1,0 +1,10 @@
+/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/debug/deps/libwebp-33c6cd5c3d8d54b9.rmeta: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/animation_encoder.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/decoder.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/animation_decoder.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/encoder.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/shared.rs
+
+/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/debug/deps/webp-33c6cd5c3d8d54b9.d: /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/lib.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/animation_encoder.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/decoder.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/animation_decoder.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/encoder.rs /Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/shared.rs
+
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/lib.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/animation_encoder.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/decoder.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/animation_decoder.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/encoder.rs:
+/Users/arielroasso/.cargo/registry/src/index.crates.io-6f17d22bba15001f/webp-0.2.6/src/shared.rs:
