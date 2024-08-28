@@ -1,1 +1,0 @@
-/Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/target/wasm32-unknown-unknown/release/xml2json.wasm: /Users/arielroasso/git/frontend-master/src/app/utils/image_convertors/src/lib.rs
