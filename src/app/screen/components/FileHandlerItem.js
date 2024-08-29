@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { FileData, Status } from "../../entities/FileData";
 import FileFormat from "../../entities/FileFormat.js";
 
-const target_formats = Object.keys(FileFormat);//["png", "jpg", "jpeg",'ppm','webp    '];
+const target_formats = FileFormat.getImageFormats();//["png", "jpg", "jpeg",'ppm','webp    '];
 const FileHandlerItem = ({ fileData,  updateItem, removeItem }) => {
     const {status, id, targetFormat,file, converted,} = fileData;
     const [selectedFormat, setSelectedFormat] = useState(-1);
@@ -14,9 +14,9 @@ const FileHandlerItem = ({ fileData,  updateItem, removeItem }) => {
     useEffect(()=>{
         if(fileData.file){
             fileData.getSourceFileType().then((res)=>{
-                console.log(res);
+                console.log("getSourceFileType", res);
                 if(res?.mime){
-                    setSourceFormat(res?.mime);
+                    setSourceFormat(res.mime);
                 }
           
             });
@@ -52,15 +52,20 @@ const FileHandlerItem = ({ fileData,  updateItem, removeItem }) => {
             <p className="inline text-base-content">{sourceFormat}</p>
             <AiOutlineRight className="inline text-base-content" />
             <div className="dropdown">
-                <div tabIndex={0} role="button" className="btn m-1">{selectedFormat == -1 ? "..." : target_formats[selectedFormat]}<AiOutlineDown /></div>
+                <div tabIndex={0} role="button" className="btn m-1">{selectedFormat == -1 ? "..." : target_formats[selectedFormat].name}<AiOutlineDown /></div>
                 <ul tabIndex={0} className="dropdown-content bg-base-100 menu rounded-box w-72 p-2 shadow grid grid-cols-3">
-                    {target_formats.map((f,index)=> <li className="text-neutral" key={f}><a onClick={()=>updateFormat(index)}>{f}</a></li>)}
+                    {target_formats.map((f,index)=> <li className="text-neutral" key={index}><a onClick={()=>updateFormat(index)}>{f.name}</a></li>)}
                 </ul>
             </div>
         </div>
         {status == Status.NONE && <button className="btn btn-square" onClick={()=>removeItem(fileData)}> <AiOutlineClose className="size-7" /></button>}
         {status === Status.PROCESSING && <div className="btn btn-square" > <span className="loading loading-spinner loading-md size-7"></span></div>}
-        {status === Status.ERROR  && <div className="btn btn-square" > <AiOutlineExclamationCircle className="size-7"/></div>}
+        {status === Status.ERROR  && <div className="btn btn-square "  >
+            <div className="hover:tooltip tooltip-open tooltip-error " data-tip={fileData.error}>
+            <AiOutlineExclamationCircle className="size-7 text-error"/>
+            </div>
+            
+             </div>}
 
         {status == Status.DONE && <button className="btn btn-square" onClick={downloadFile}> <AiOutlineDownload className="size-7" /></button>}
 

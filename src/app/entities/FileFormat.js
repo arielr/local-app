@@ -37,6 +37,11 @@ const FileFormat  = Object.freeze({
     // XBM: {name: , extension:, category:  "image"},
     // XFace: {name: , extension:, category:  "image"},
     // XWD: {name: , extension:, category:  "image"},
+    getImageFormats(){
+      console.log(Object.values(FileFormat));
+      console.log(Object.values(FileFormat).filter((obj)=>obj.category == "image"));
+      return Object.values(FileFormat).filter((obj)=>obj.category == "image");
+    }
   });
 
   export default FileFormat;

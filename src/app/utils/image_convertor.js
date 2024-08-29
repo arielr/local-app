@@ -23,12 +23,12 @@ class ImageConvertor {
         var uint8Array =  new Uint8Array(await file.arrayBuffer());
         await this.ffmpeg.writeFile(file.name, uint8Array); 
         await this.ffmpeg.exec(['-i', file.name, fileData.getOutputFileName()]);
-        const sourceFileData =  await this.ffmpeg.exec(['-i', file.name,""]);
-        console.log('fileData',sourceFileData);
+        // const sourceFileData =  await this.ffmpeg.exec(['-i', file.name,""]);
+        // console.log('fileData',sourceFileData);
 
         const binaryRes = await this.ffmpeg.readFile(fileData.getOutputFileName());
         const blob = new Blob([binaryRes.buffer]);
-        return new File([blob], fileData.getOutputFileName(), { type: `image/${fileData.targetFormat}` });
+        return new File([blob], fileData.getOutputFileName(), { type: `image/${fileData.targetFormat.extension}` });
         
   }
 

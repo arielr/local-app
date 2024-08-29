@@ -28,7 +28,7 @@ class FileData {
         const originalFileName = this.file.name;
         const pos = originalFileName.includes(".") ? originalFileName.lastIndexOf(".") : originalFileName.length
         const fileRoot = originalFileName.substr(0, pos);
-        return `${fileRoot}.${this.targetFormat}`;
+        return `${fileRoot}.${this.targetFormat.extension}`;
     }
 
     iteratorToStream(iterator) {
