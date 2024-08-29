@@ -16,6 +16,15 @@ module.exports = {
   //     },
   //   },
   // },
+  theme: { 
+    extend: { 
+        fontFamily: { 
+            lato: ['Lato', 'sans-serif'] ,
+            poppins: ["Poppins", "sans-serif"],
+            "bricolage-grotesque":[ "bricolage-grotesque", "sans-serif"]
+        } 
+    }, 
+  }, 
   plugins: [   require('daisyui')],
   daisyui: {
     themes: [ 'emerald'],

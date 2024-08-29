@@ -1,11 +1,12 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
-import { AiOutlinePlus } from 'react-icons/ai'
+import { AiOutlinePlus,AiOutlineDownload,AiOutlineSync } from 'react-icons/ai'
 import FileUpload from './ui/FileUploader'
 import FileHandlerItem from './screen/components/FileHandlerItem'
 import { FileData, Status } from './entities/FileData'
 import ImageConvertor from './utils/image_convertor.js'
-
+import FilesUtils from './utils/filesUtils'
+import { CgTerrain } from "react-icons/cg";
 export default function Home () {
   const [selectedFiles, setSelectedFiles] = useState([])
   const imageConvertor = useRef(new ImageConvertor())
@@ -33,6 +34,14 @@ export default function Home () {
     setSelectedFiles(prevList => {
       return prevList.filter(item => item.id != fileData.id)
     })
+  }
+
+
+  function downloadAll(){
+    selectedFiles.length == 1 ? 
+    FilesUtils.downloadFile(selectedFiles) :
+     FilesUtils.zipFiles(selectedFiles, 'converted.zip');
+
   }
 
   const files_list = selectedFiles.map((file,index) => {
@@ -68,13 +77,17 @@ export default function Home () {
     }
   }
 
+
   const isFilesConverted = files => files.some(f => f.converted != null)
   return (
-    <main className='flex min-h-screen h-screen flex-col items-center justify-start bg-base-100'>
+    <main className='flex min-h-screen font-bricolage-grotesque  min-w-md h-screen flex-col items-center justify-start bg-base-200'>
       {/* Toolbar */}
-      <div className='flex w-full p-4 px-8 bg-base-200'>
-        <div className='size-16 rounded-full bg-blue-300'></div>
-        <h1 className='pl-4 font-bold  text-xl flex items-center'>RunLocaly</h1>
+      <div className='navbar flex overflow-hidden  w-full p-4 px-8 bg-base-100'>
+        <div className=' rounded-full   overflow-visible bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex justify-start'>
+          <CgTerrain className='size-20 relative y-20 x-20'/>
+        </div>
+        <h1 className='ml-2 font-bold text-3xl flex items-center font-sans-serif text-primary-content '>Terrapps</h1>
+
       </div>
       {/* Main Screen*/}
       <div>
@@ -93,23 +106,34 @@ export default function Home () {
       {selectedFiles.length > 0 && (
         <div className='h-full w-full max-w-screen-xl space-y-4'>
           {files_list}
-          <div className='w-full mt-8 max-w-screen-xl flex justify-center'>
+          {!isFilesConverted(selectedFiles) &&  <div className='w-full mt-8 max-w-screen-xl flex justify-center'>
             <button
-              disabled={isFilesConverted(selectedFiles) ? 'disabled' : ''}
-              onClick={() => {}}
               className='btn btn-xs sm:btn-sm md:btn-md lg:btn-lg m-4 '
             >
               <AiOutlinePlus className='size-7' />
               Add files
             </button>
             <button
-              disabled={isFilesConverted(selectedFiles) ? 'disabled' : ''}
               onClick={convertFiles}
               className='btn btn-xs sm:btn-sm md:btn-md lg:btn-lg m-4 '
             >
               Convert
             </button>
-          </div>
+          </div>}
+          {isFilesConverted(selectedFiles) &&  <div className='w-full mt-8 max-w-screen-xl flex justify-center'>
+            <button
+              className='btn btn-xs sm:btn-sm md:btn-md lg:btn-lg m-4 '
+            >
+              <AiOutlineSync className='size-7' />
+              Convert again
+            </button>
+            <button
+              onClick={downloadAll}
+              className='btn btn-xs sm:btn-sm md:btn-md lg:btn-lg m-4 bg-primary'
+            >
+              <AiOutlineDownload className='size-7'/>Download All
+            </button>
+          </div>}
         </div>
       )}
     </main>
