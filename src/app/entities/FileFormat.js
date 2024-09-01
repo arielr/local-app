@@ -1,14 +1,24 @@
 /**
+ * Enum for file category
+ * @readonly
+ * @enum {{category: string}}
+ */
+const FileCategory  = Object.freeze({
+  IMAGE: {category: "image"},
+  VIDEO: {category: "video"},
+  DOCUMENT: {category: "document"},
+});
+
+/**
  * Enum for files
  * @readonly
  * @enum {{name: string, extension: string, fileCategory: string}}
  */
-
 const FileFormat  = Object.freeze({
-    PDF:   { name: "PDF", extension: "pdf", fileCategory: "document"},
+    PDF: { name: "PDF", extension: "pdf", fileCategory: "document"},
     YUV: {name: " .Y.U.V", extension:"", category:"image" },
     AliasPIX: {name: "Alias Pix", extension:"", category: "image"},
-    GIF: {name: "GIF", extension:"", category: "image"},
+    GIF: {name: "GIF", extension:"gif", category: "image"},
     APNG: {name: "APNG", extension:"", category:"image" },
     BMP: {name: "BMP", extension: "bmp", category:"image" },
     DPX: {name: "DPX", extension: "dpx", category:"image"},
@@ -17,7 +27,7 @@ const FileFormat  = Object.freeze({
     JPEG: {name: "JPEG", extension: "jpeg", category:"image"},
     JPEG2000: {name: "JPEG2000", extension: "jpeg",  category:"image" },
     JPEG_LS: {name: 'JPEG-LS', extension:"", category:"image" },
-    LJPEG: {name: "LJPEG", extension: "", category: "image"},
+    LJPEG: {name: "LJPEG", extension: "ljpeg", category: "image"},
     PAM: {name: "PAM", extension: "pam", category: "image"},
     PBM: {name: "PBM", extension: "pbm", category:"image" },
     PCX: {name: "PCX", extension: "pcx", category: "image"},

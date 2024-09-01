@@ -1,5 +1,5 @@
 import {fileTypeFromStream} from 'file-type';
-
+import FileFormat from './FileFormat'
 /**
  * Enum for common colors.
  * @readonly
@@ -13,7 +13,6 @@ const Status = Object.freeze({
   });
 
 class FileData {
-    
     constructor({file, targetFormat, id}) {
         this.status = Status.NONE;
         this.file = file;
@@ -22,6 +21,9 @@ class FileData {
         this.id = id;
         this.converted = null;
         this.fileType = null;
+        this.requestArguments = new Map([
+          [FileFormat.GIF, new Map([['fps',5]])]
+        ]);
     }
 
     getOutputFileName(){
@@ -51,7 +53,10 @@ class FileData {
         const result = await fileTypeFromStream(this.file.stream());
         this.sourceFormat = result;
         return result;
-        
+    }
+
+    isFileHasSettings(){
+      return this.targetFormat == FileFormat.GIF;
     }
     
 

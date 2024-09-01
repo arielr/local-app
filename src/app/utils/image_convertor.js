@@ -19,10 +19,21 @@ class ImageConvertor {
 
     async convert(fileData) {
         console.log(fileData);
-        const {file, targetFormat} = fileData;
+        const {file, targetFormat,requestArguments} = fileData;
+        // console.log(requestArguments);
+        // console.log(targetFormat);
+        // console.log(requestArguments.has(targetFormat));
+        const args = requestArguments.get(targetFormat);
+
+        // console.log(Array.from(args[Symbol.iterator]().map(a=>a.join('='))) );
+        var joinedArgs = [];
+        if(args){
+            joinedArgs = Array.from(args[Symbol.iterator]().map(a=>a.join('=')));
+        }
+        console.log(joinedArgs);
         var uint8Array =  new Uint8Array(await file.arrayBuffer());
         await this.ffmpeg.writeFile(file.name, uint8Array); 
-        await this.ffmpeg.exec(['-i', file.name, fileData.getOutputFileName()]);
+        await this.ffmpeg.exec(['-i', file.name, fileData.getOutputFileName(),"-filter:v"].concat(joinedArgs));
         // const sourceFileData =  await this.ffmpeg.exec(['-i', file.name,""]);
         // console.log('fileData',sourceFileData);
 
