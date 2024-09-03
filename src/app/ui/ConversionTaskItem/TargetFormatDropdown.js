@@ -8,18 +8,17 @@ const formats = [ FileFormat.getImageFormats(),FileFormat.getVideoFormats()];
 const TargetFormatDropdown = ({ updateSelectedFormat  }) => {
   
   const imageFormats = FileFormat.getImageFormats()
-  const [selectedFormat, setSelectedFormat] = useState(5)
+  const [selectedFormat, setSelectedFormat] = useState(null)
   const [selectedFormatType,setSelectedFormatType] = useState(0);
 
-  function updateFormat (index) {
+  function updateFormat (selectedFormat) {
     const elem = document.activeElement
     if (elem) {
       elem?.blur()
     }
 
-    const targetFormat = formats[selectedFormatType][index]
-    updateSelectedFormat(targetFormat)
-    setSelectedFormat(index)
+    updateSelectedFormat(selectedFormat)
+    setSelectedFormat(selectedFormat)
   }
 
   return (
@@ -29,7 +28,7 @@ const TargetFormatDropdown = ({ updateSelectedFormat  }) => {
         role='button'
         className='btn m-1 btn-sm sm:btn-md sm:btn-xl'
       >
-        {selectedFormat == -1 ? '...' : imageFormats[selectedFormat].name}
+        {selectedFormat ? selectedFormat.name : '...'}
         <AiOutlineDown />
       </div>
       <div tabIndex={0} className='flex flex-row justify-center dropdown-content  z-10 menu bg-base-100 rounded-box w-72 p-2 shadow'>
@@ -46,10 +45,10 @@ const TargetFormatDropdown = ({ updateSelectedFormat  }) => {
           </ul>
         </div>
         <div className='w-4/5'>
-          <ul className='grid grid-cols-3 gap-2 overflow-auto menu'>
-            {formats[selectedFormatType].map((f, index) => (
+          <ul className='grid gap-2 overflow-auto menu grid-cols-3'>
+            {formats[selectedFormatType].map((format, index) => (
               <li className='text-neutral' key={index}>
-                <a onClick={() => updateFormat(index)}>{f.name}</a>
+                <a onClick={() => updateFormat(format)}>{format.name}</a>
               </li>
             ))}
           </ul>

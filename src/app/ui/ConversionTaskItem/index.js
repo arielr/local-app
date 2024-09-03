@@ -1,6 +1,5 @@
 import {
     AiOutlineFileImage,
-    AiOutlineDown,
     AiOutlineClose,
     AiOutlineRight,
     AiOutlineDownload,
@@ -39,33 +38,14 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
         FilesUtils.downloadFile(converted)
     }
 
-    // function updateFormat(index) {
-    //     const elem = document.activeElement
-    //     if (elem) {
-    //         elem?.blur()
-    //     }
-    //     console.log(target_formats[index])
-    //     const targetFormat = target_formats[index]
-    //     fileData.targetFormat = targetFormat
-    //     setSelectedFormat(index)
-    //     updateItem(fileData)
-    // }
-
     function getSettingsButton(){
         if(targetFormat?.category == FileCategory.VIDEO){
             return <DefaultVideoSettings key={`settings_${fileData.id}`} {...fileData} />
         }
-        // const settingsDiv = fileFormatToSettingsModal.get(targetFormat);
-        // console.log(settingsDiv);
-        // console.log(file);
-        // if(settingsDiv != undefined){
-            
-        //     return settingsDiv(fileData);
-        // }
+
         return <button
         disabled={true}
-        className='btn btn-sm sm:btn-md'
-      >
+        className='btn btn-sm sm:btn-md'>
         <AiOutlineSetting className='size-6' />
       </button>
     }
@@ -74,9 +54,8 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
       return  (<div className={isSmallScreen ? "inline sm:hidden" : "hidden sm:inline"}>
       {status == Status.NONE && (
             <button
-                className='btn btn-sm sm:btn-md btn-square  sm:flex items-center justify-center'
-                onClick={() => removeItem(fileData)}
-            >
+                className='btn btn-sm sm:btn-md btn-square sm:flex items-center justify-center'
+                onClick={() => removeItem(fileData)}>
                 <AiOutlineClose className='size-full p-2 hover:text-accent' />
             </button>
         )}
@@ -84,10 +63,6 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
             <div className="radial-progress text-base-content text-sm" style={{"--value": progress*100,"--size": "3rem"}} role="progressbar">
             {Math.round(progress*100)   }%
           </div>
-            // <div className='btn btn-square'>
-                
-            //     <span className='loading loading-spinner loading-sm sm:loading-md size-7'></span>
-            // </div>
         )}
         {status === Status.ERROR && (
             <div className='btn btn-square '>
@@ -109,23 +84,14 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
 
     return (
         <div className='flex flex-col sm:flex-row bg-base-100 items-center justify-between w-11/12 rounded-xl px-2 sm:px-6 py-3 border-base-300 text-secondary-content border-2 shadow-md'>
-            <div className='flex flex-row justify-between sm:justify-start items-center w-fill '>
+            <div className='flex flex-row justify-between sm:justify-start items-center w-fill'>
                 <AiOutlineFileImage className='size-8 text-base-content hidden sm:inline' />
                 <div className='flex flex-col pl-3 md:flex-row items-start justify-center md:items-center'>
                     <p className='text-primary-content line-clamp-1'>
                         {file?.name}
                     </p>
                     <div className="badge hidden sm:block sm:ml-2">{FilesUtils.formatBytes(file?.size)}</div>
-                    {/* <p className='text-md text-bold text-base-300 hidden sm:inlnie'>
-                      
-                    </p> */}
                 </div>
-                {/* <button
-                    className='btn btn-square btn-sm sm:hidden bg-base-100 border-0'
-                    onClick={() => removeItem(fileData)}
-                >
-                    <AiOutlineClose className='size-4' />
-                </button> */}
               {getButtonByStatus(true)}
             </div>
             <div className='w-full h-4 sm:hidden'></div>
@@ -135,28 +101,10 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
                 <p className='hidden sm:inline text-base-content'>{sourceFormat}</p>
                 <AiOutlineRight className='hidden sm:inline text-base-content' />
                 <TargetFormatDropdown updateSelectedFormat={(newFileFormat)=>{
+                    console.log("TargetFormatDropdown",newFileFormat);
                     fileData.targetFormat = newFileFormat;
                     updateItem(fileData);
                 }}/>
-                {/* <div className='dropdown'>
-                    <div tabIndex={0} role='button' className='btn m-1 btn-sm sm:btn-md sm:btn-xl'>
-                        {selectedFormat == -1
-                            ? '...'
-                            : target_formats[selectedFormat].name}
-                        <AiOutlineDown />
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className='dropdown-content z-10 menu bg-base-100 rounded-box w-72 p-2 shadow grid grid-cols-3'
-                    >
-                        {target_formats.map((f, index) => (
-                            <li className='text-neutral' key={index}>
-                                <a onClick={() => updateFormat(index)}>{f.name}</a>
-                            </li>
-                        ))}
-                    </ul>
-                </div> */}
-
                {getSettingsButton()}
             </div>
             {getButtonByStatus(false)}

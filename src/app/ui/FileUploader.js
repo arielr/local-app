@@ -1,8 +1,8 @@
-'use client';
+"use client";
 // import { FFmpeg } from '@ffmpeg/ffmpeg';
 // import { fetchFile, toBlobURL } from '@ffmpeg/util';
-import React, { useState, useEffect, useRef } from 'react';
-import { useDropzone } from 'react-dropzone';
+import React, { useState, useEffect, useRef } from "react";
+import { useDropzone } from "react-dropzone";
 import { AiOutlineUpload } from "react-icons/ai";
 
 // src/app/utils/image_convertor
@@ -10,30 +10,30 @@ import { AiOutlineUpload } from "react-icons/ai";
 // import { default as initXmlConvetor, convert_xml_to_json} from '../utils/xml2json/pkg/xml2json.js';
 // import { default as initImageConvertor, convert_image} from '../utils/image_convertors/pkg/xml2json.js';
 
-const FileUpload = ({setFiles}) => {
+const FileUpload = ({ setFiles }) => {
   const [loaded, setLoaded] = useState(false);
   const videoRef = useRef(null);
   const messageRef = useRef(null);
   // const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles) =>  {
-      acceptedFiles.forEach((file,index) => file.id = index)
+    onDrop: (acceptedFiles) => {
+      acceptedFiles.forEach((file, index) => (file.id = index));
       setFiles(acceptedFiles);
-    }
+    },
   });
 
   // const transcode = async (file) => {
   //   const ffmpeg = ffmpegRef.current;
   //   var uint8Array =  new Uint8Array(await file.arrayBuffer());
-  //   var write_status = await ffmpeg.writeFile(file.name, uint8Array); 
+  //   var write_status = await ffmpeg.writeFile(file.name, uint8Array);
   //   var result_status = await ffmpeg.exec(['-i', file.name, 'output1.png']);
   //   console.log(`3 status ${result_status}`);
 
   //   const data = await ffmpeg.readFile('output1.png');
-   
+
   //   console.log(data);
-    
+
   // }
 
   // const load = async () => {
@@ -52,27 +52,27 @@ const FileUpload = ({setFiles}) => {
   //   });
   // }
 
-
-
   return (
+    <>
+      <div
+        className="flex h-full w-full items-center justify-center text-base-content"
+        {...getRootProps()}
+      >
+        <input {...getInputProps()} />
+        <div className="flex w-full flex-col items-center justify-center space-y-2">
+          <AiOutlineUpload className="size-12" />
+          <p className="item-center flex justify-center font-bricolage-grotesque">
+            Drag and drop files here or click to browses.
+          </p>
+        </div>
 
-   <> 
-   <div className='w-full h-full flex items-center justify-center text-base-content' {...getRootProps()}> 
-      <input {...getInputProps()} />
-      <div className='w-full flex flex-col justify-center items-center space-y-2'>
-      <AiOutlineUpload className='size-12'/>
-      <p className="font-bricolage-grotesque flex item-center justify-center">Drag and drop files here or click to browses.</p>
-  
-
-
-      </div>
-
-      <ul>
-        {/* {uploadedFiles.map((file) => (
+        <ul>
+          {/* {uploadedFiles.map((file) => (
           <li key={file.name}>{file.name}</li>
         ))} */}
-      </ul>
-    </div></>
+        </ul>
+      </div>
+    </>
   );
 };
 export default FileUpload;
