@@ -15,34 +15,59 @@ const resultions = [
  {name:"240p (SD): 426x240", value:"426x240", category: "Youtube"},
 ];
 
-const DefaultVideoSettings = fileData => {
+const DefaultVideoSettings = (fileData) => {
   const [frameRate, setFrameRate] = useState(-1)
   const [isDirty, setIsDirty] = useState(false)
-  const [originalState, setOriginalState] = useState({ frameRate: 5 })
+  const [originalState, setOriginalState] = useState(null);
   const [changeFpsInput, setChangeFpsInput] = useState(false)
   const [videoResultion, setVideoResultion] = useState(null)
   const modalRef = useRef()
 
   useEffect(() => {
-    const fps = fileData.requestArguments.get(FileFormat.GIF).get('fps')
-    setFrameRate(fps)
-    setOriginalState({ frameRate: fps })
+
+    //load previus settings if any
+    const args = fileData.requestArguments.get(fileData.targetFormat);
+    if(args){
+
+      if(args.has('frameRate')){
+        setFrameRate(args.get('frameRate'))
+      }
+
+      if(args.has('videoResultion')){
+        setVideoResultion(args.get('videoResultion'));
+      }
+    }
   }, [])
 
   useEffect(() => {
-    if (originalState != null) {
-      setIsDirty(frameRate != originalState.frameRate)
+    console.log('setIsDirty', originalState, frameRate, originalState)
+    if (originalState == null) {
+  
+      setIsDirty(frameRate != -1 || originalState );
+    }else{
+      const args = fileData.requestArguments.get(fileData.targetFormat);
+
     }
   }, [frameRate, originalState])
 
-  function onClickOpenModal () {
-    setOriginalState({ frameRate: frameRate })
-  }
-
   function closeAndSaveCurrnetSettings () {
-    setOriginalState({ frameRate: frameRate })
+    setOriginalState({ frameRate: frameRate,videoResultion:videoResultion });
+
+    if(targetFormat && frameRate)
+      fileData.requestArguments.get(targetFormat).set('frameRate', frameRate);
+    if(targetFormat && videoResultion)
+      fileData.requestArguments.get(targetFormat).set('videoResultion', videoResultion);
+
     // fileData.requestArguments[FileFormat.GIF].push(`-filter_complex ${frameRate}`)
-    fileData.requestArguments.get(FileFormat.GIF).set('fps', frameRate)
+    if(changeFpsInput){
+      console.log('changeFpsInput',changeFpsInput)
+      fileData.requestArguments.get(fileData.targetFormat).set('fps', frameRate)
+    }
+
+    if(videoResultion){
+      fileData.requestArguments.get(fileData.targetFormat).set('videoResultion', videoResultion)
+    }
+
     modalRef.current.close()
   }
 
@@ -94,7 +119,7 @@ const DefaultVideoSettings = fileData => {
                 className='dropdown-content menu  bg-base-100 rounded-box z-[100] w-52   p-2 shadow'
               >
             {resultions.map((f, index) => (
-              <li className='text-neutral' key={f}>
+              <li className='text-neutral' key={f.id}>
                
                 <a onClick={() => setVideoResultion(f.value)}>{f.name}</a>
               </li>

@@ -9,7 +9,7 @@ import {
 } from 'react-icons/ai'
 import { useState, useEffect } from 'react'
 import { ConversionTask, Status } from '../../entities/ConvertionTask.js'
-import FileFormat from '../../entities/FileFormat.js'
+import {FileFormat,FileCategory} from '../../entities/FileFormat.js'
 import FilesUtils from '../../utils/filesUtils.js'
 import DefaultVideoSettings from "../ExtensionSettings/DefaultVideoSettings.js";
 import {fileFormatToSettingsModal} from "../ExtensionSettings/ExtensionToSettingsModal.js";
@@ -52,13 +52,16 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
     // }
 
     function getSettingsButton(){
-        const settingsDiv = fileFormatToSettingsModal.get(targetFormat);
-        console.log(settingsDiv);
-        console.log(file);
-        if(settingsDiv != undefined){
-            
-            return settingsDiv(fileData);
+        if(targetFormat?.category == FileCategory.VIDEO){
+            return <DefaultVideoSettings key={`settings_${fileData.id}`} {...fileData} />
         }
+        // const settingsDiv = fileFormatToSettingsModal.get(targetFormat);
+        // console.log(settingsDiv);
+        // console.log(file);
+        // if(settingsDiv != undefined){
+            
+        //     return settingsDiv(fileData);
+        // }
         return <button
         disabled={true}
         className='btn btn-sm sm:btn-md'
@@ -131,7 +134,7 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
 
                 <p className='hidden sm:inline text-base-content'>{sourceFormat}</p>
                 <AiOutlineRight className='hidden sm:inline text-base-content' />
-                <TargetFormatDropdown updateItem={(newFileFormat)=>{
+                <TargetFormatDropdown updateSelectedFormat={(newFileFormat)=>{
                     fileData.targetFormat = newFileFormat;
                     updateItem(fileData);
                 }}/>

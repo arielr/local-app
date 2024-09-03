@@ -1,5 +1,5 @@
 import {fileTypeFromStream} from 'file-type';
-import FileFormat from './FileFormat'
+import {FileFormat} from './FileFormat'
 /**
  * Enum for common colors.
  * @readonly
@@ -23,7 +23,7 @@ class ConversionTask {
         this.fileType = null;
         this.onProgress = null;
         this.requestArguments = new Map([
-          [FileFormat.GIF, new Map([['fps',5]])]
+          // [FileFormat.GIF, new Map([])]
         ]);
     }
 

@@ -1,4 +1,4 @@
-import FileFormat from "../../entities/FileFormat";
+import {FileFormat} from "../../entities/FileFormat";
 import DefaultVideoSettings from "./DefaultVideoSettings";
 
 const fileFormatToSettingsModal = new Map();

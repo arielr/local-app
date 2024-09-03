@@ -94,4 +94,4 @@ const FileFormat  = Object.freeze({
 
   });
 
-  export default FileFormat;
+  export {FileFormat,FileCategory};
