@@ -4,7 +4,7 @@
  * @enum {{category: string}}
  */
 const FileCategory  = Object.freeze({
-  IMAGE: {category: "image"},
+  IMAGE: {category: 'image'},
   VIDEO: {category: "video"},
   DOCUMENT: {category: "document"},
 });
@@ -12,46 +12,86 @@ const FileCategory  = Object.freeze({
 /**
  * Enum for files
  * @readonly
- * @enum {{name: string, extension: string, fileCategory: string}}
+ * @enum {{name: string, extension: string, category: FileCategory}}
  */
 const FileFormat  = Object.freeze({
-    PDF: { name: "PDF", extension: "pdf", fileCategory: "document"},
+    PDF: { name: "PDF", extension: "pdf", category: FileCategory.IMAGE},
     YUV: {name: " .Y.U.V", extension:"", category:"image" },
-    AliasPIX: {name: "Alias Pix", extension:"", category: "image"},
-    GIF: {name: "GIF", extension:"gif", category: "image"},
-    APNG: {name: "APNG", extension:"", category:"image" },
-    BMP: {name: "BMP", extension: "bmp", category:"image" },
-    DPX: {name: "DPX", extension: "dpx", category:"image"},
-    FITS: {name: "FITS", extension: 'fits', category: "image"},
-    HDR: {name: "HDR", extension:"", category: "image"},
-    JPEG: {name: "JPEG", extension: "jpeg", category:"image"},
-    JPEG2000: {name: "JPEG2000", extension: "jpeg",  category:"image" },
-    JPEG_LS: {name: 'JPEG-LS', extension:"", category:"image" },
-    LJPEG: {name: "LJPEG", extension: "ljpeg", category: "image"},
-    PAM: {name: "PAM", extension: "pam", category: "image"},
-    PBM: {name: "PBM", extension: "pbm", category:"image" },
-    PCX: {name: "PCX", extension: "pcx", category: "image"},
-    PFM: {name: "PFM", extension: "pfm", category: "image"},
-    PGM: {name: "PGM", extension: "pgm", category: "image"},
-    PGMYUV: {name: "PGMYUV", extension: "pgmyuv", category:"image"},
-    PHM: {name: "PHM", extension: "phm", category: "image"},
-    // PNG: {name: , extension:, category: "image"},
-    // PPM: {name: , extension:, category: "image"},
-    // QOI: {name: , extension:, category: "image"},
-    // SGI: {name: , extension:, category: "image"},
-    // SunRasterfile: {name: , extension:, category:  "image"},
-    // TIFF: {name: , extension:, category:  "image"},
-    // Truevision Targa: {name: , extension:, category:  "image"},
-    // VBN: {name: , extension:, category:  "image"},
-    // WBMP: {name: , extension:, category:  "image"},
-    // XBM: {name: , extension:, category:  "image"},
-    // XFace: {name: , extension:, category:  "image"},
-    // XWD: {name: , extension:, category:  "image"},
+    AliasPIX: {name: "Alias Pix", extension:"", category: FileCategory.IMAGE},
+    GIF: {name: "GIF", extension:"gif", category: FileCategory.IMAGE},
+    APNG: {name: "APNG", extension:"", category: FileCategory.IMAGE},
+    BMP: {name: "BMP", extension: "bmp", category: FileCategory.IMAGE },
+    DPX: {name: "DPX", extension: "dpx", category: FileCategory.IMAGE},
+    FITS: {name: "FITS", extension: 'fits', category: FileCategory.IMAGE},
+    HDR: {name: "HDR", extension:"", category: FileCategory.IMAGE},
+    JPEG: {name: "JPEG", extension: "jpeg", category: FileCategory.IMAGE},
+    JPEG2000: {name: "JPEG2000", extension: "jpeg", category: FileCategory.IMAGE },
+    JPEG_LS: {name: 'JPEG-LS', extension:"", category: FileCategory.IMAGE },
+    LJPEG: {name: "LJPEG", extension: "ljpeg", category: FileCategory.IMAGE},
+    PAM: {name: "PAM", extension: "pam", category: FileCategory.IMAGE},
+    PBM: {name: "PBM", extension: "pbm", category: FileCategory.IMAGE },
+    PCX: {name: "PCX", extension: "pcx", category: FileCategory.IMAGE},
+    PFM: {name: "PFM", extension: "pfm", category: FileCategory.IMAGE},
+    PGM: {name: "PGM", extension: "pgm", category: FileCategory.IMAGE},
+    PGMYUV: {name: "PGMYUV", extension: "pgmyuv", category: FileCategory.IMAGE},
+    PHM: {name: "PHM", extension: "phm", category: FileCategory.IMAGE},
+    PNG: {name: "PNG", extension: "png", category: FileCategory.IMAGE},
+
+    // VIDEO FORMATS
+    THREEGP: {name: "3GP", extension: "3gp", category: FileCategory.VIDEO},
+    AVI: {name: "AVI", extension: "avi", category: FileCategory.VIDEO},
+    MKV: {name: "MKV", extension: "mkv", category: FileCategory.VIDEO},
+    MP4: {name: "MP4", extension: "mp4", category: FileCategory.VIDEO},
+    OGV: {name: "OGV", extension: "ogv", category: FileCategory.VIDEO},
+    WEBM: {name: "WEBM", extension: "webm", category: FileCategory.VIDEO},
+    WMV: {name: "WMV", extension: "wmv", category: FileCategory.VIDEO},
+    // PNG: {name: "", extension: "", category: FileCategory.VIDEO},
+
+
+
+
+    // PPM: {name: , extension:, category: FileCategory.IMAGE},
+    // QOI: {name: , extension:, category: FileCategory.IMAGE},
+    // SGI: {name: , extension:, category: FileCategory.IMAGE},
+    // SunRasterfile: {name: , extension:, category:  FileCategory.IMAGE},
+    // TIFF: {name: , extension:, category:  FileCategory.IMAGE},
+    // Truevision Targa: {name: , extension:, category:  FileCategory.IMAGE},
+    // VBN: {name: , extension:, category:  FileCategory.IMAGE},
+    // WBMP: {name: , extension:, category:  FileCategory.IMAGE},
+    // XBM: {name: , extension:, category:  FileCategory.IMAGE},
+    // XFace: {name: , extension:, category:  FileCategory.IMAGE},
+    // XWD: {name: , extension:, category:  FileCategory.IMAGE},
+//     3GP
+// AVI
+// FLV
+// MKV
+// MOV
+// MP4
+// OGV
+// WEBM
+// WMV
+
+// AAC
+// AIFF
+// ALAC
+// AMR
+// FLAC
+// M4A
+// MP3
+// OGG
+// WAV
+// WMA
+
+
+
+
     getImageFormats(){
-      console.log(Object.values(FileFormat));
-      console.log(Object.values(FileFormat).filter((obj)=>obj.category == "image"));
-      return Object.values(FileFormat).filter((obj)=>obj.category == "image");
-    }
+      return Object.values(FileFormat).filter((obj)=>obj.category == FileCategory.IMAGE);
+    },
+    getVideoFormats(){
+      return Object.values(FileFormat).filter((obj)=>obj.category == FileCategory.VIDEO);
+    },
+
   });
 
   export default FileFormat;

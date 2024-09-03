@@ -1,8 +1,8 @@
 import FileFormat from "../../entities/FileFormat";
-import GifSettings from "./GifSettings";
+import DefaultVideoSettings from "./DefaultVideoSettings";
 
 const fileFormatToSettingsModal = new Map();
-fileFormatToSettingsModal.set(FileFormat.GIF,(props) =>  <GifSettings {...props} />);
+fileFormatToSettingsModal.set(FileFormat.GIF,(props) =>  <DefaultVideoSettings {...props} />);
 
 
 export {fileFormatToSettingsModal};

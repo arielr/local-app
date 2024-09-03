@@ -5,18 +5,15 @@ class FilesUtils {
     static async zipFiles(fileDataArray, outputFileName){
         var zip = new JSZip();
         await Promise.all(fileDataArray.map(async (fileData)=> {     
-            // fileData.getOutputFileName();
             var arrayBuffer = await fileData.converted.arrayBuffer();
             var res=  zip.file("aa.jpg", arrayBuffer);
-            console.log("zip1", res);
         }));
-        console.log("aaaaaaa");
+
         var content = await zip.generateAsync({type:"blob"});
-        console.log("aaaabbbbaaa", content);
-            // see FileSaver.js
         FilesUtils.downloadFile(new File([content], outputFileName));
     }
     static downloadFile(file) {
+        console.log(file);
         const url = URL.createObjectURL(file);
         const a = document.createElement("a");
         a.href = url;
@@ -35,6 +32,8 @@ class FilesUtils {
     
         return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
     }
+
+
     
 }
 

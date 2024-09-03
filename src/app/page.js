@@ -2,9 +2,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { AiOutlinePlus,AiOutlineDownload,AiOutlineSync } from 'react-icons/ai'
 import FileUpload from './ui/FileUploader'
-import FileHandlerItem from './ui/FileHandlerItem'
-import { FileData, Status } from './entities/FileData'
-import ImageConvertor from './utils/image_convertor.js'
+import ConversionTaskItem from './ui/ConversionTaskItem/index.js'
+import { ConversionTask, Status } from './entities/ConvertionTask'
+import ImageConvertor from './utils/imageConvertor.js'
 import FilesUtils from './utils/filesUtils'
 import { CgTerrain } from "react-icons/cg";
 export default function Home () {
@@ -20,7 +20,7 @@ export default function Home () {
 
   function handleSelectedFiles (files) {
     const fileDataList = files.map((file, index) => {
-      return new FileData({ file: file, fileFormat: null, id: index })
+      return new ConversionTask({ file: file, fileFormat: null, id: index })
     })
     setSelectedFiles(fileDataList)
   }
@@ -40,7 +40,7 @@ export default function Home () {
 
   function downloadAll(){
     selectedFiles.length == 1 ? 
-    FilesUtils.downloadFile(selectedFiles) :
+    FilesUtils.downloadFile(selectedFiles[0].file) :
      FilesUtils.zipFiles(selectedFiles, 'converted.zip');
 
   }
@@ -48,7 +48,7 @@ export default function Home () {
   const files_list = selectedFiles.map((file,index) => {
     console.log('selectedFiles', selectedFiles);
     return (
-      <FileHandlerItem
+      <ConversionTaskItem
         key={file.id}
         fileData={file}
         updateItem={updateItem}
@@ -127,7 +127,7 @@ export default function Home () {
               onClick={()=>setSelectedFiles([])}
             >
               <AiOutlineSync className='size-7' />
-              Convert again
+              Restart
             </button>
             <button
               onClick={downloadAll}

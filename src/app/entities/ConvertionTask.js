@@ -12,15 +12,16 @@ const Status = Object.freeze({
     ERROR: { name:"error"}
   });
 
-class FileData {
+class ConversionTask {
     constructor({file, targetFormat, id}) {
+        this.id = id;
         this.status = Status.NONE;
         this.file = file;
         this.targetFormat = targetFormat;
         this.sourceFormat = null;
-        this.id = id;
-        this.converted = null;
+        this.outputFile = null;
         this.fileType = null;
+        this.onProgress = null;
         this.requestArguments = new Map([
           [FileFormat.GIF, new Map([['fps',5]])]
         ]);
@@ -62,6 +63,6 @@ class FileData {
 
 }
 export {
-    FileData,
+  ConversionTask,
     Status
 }
