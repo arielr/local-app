@@ -1,70 +1,67 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useActionState } from "react";
 import BaseSettings from "./BaseSetting";
 import { AiOutlineSetting } from "react-icons/ai";
 import FileFormat from "../../entities/FileFormat";
 import classnames from "classnames";
+import { file } from "jszip";
 
-const resultions = [
-  { name: "No Change", value: null, category: "" },
-  { name: "2160p (4K): 3840x2160", value: "3840x2160", category: "Youtube" },
-  { name: "1440p (2k): 2560x1440", value: "2560x1440", category: "Youtube" },
-  { name: "1080p (HD): 1920x1080", value: "1920x1080", category: "Youtube" },
-  { name: "720p (HD): 1280x720", value: "1280x720", category: "Youtube" },
-  { name: "480p (SD): 854x480", value: "854x480", category: "Youtube" },
-  { name: "360p (SD): 640x360", value: "640x360", category: "Youtube" },
-  { name: "240p (SD): 426x240", value: "426x240", category: "Youtube" },
-];
+const NO_CHANGE = "No Change";
 
 const DefaultVideoSettings = (fileData) => {
   const [frameRate, setFrameRate] = useState(null);
-  const [isDirty, setIsDirty] = useState(false);
-  const [previusState, setPreviusState] = useState(null);
-  const [enableFpsInput, setEnableFpsInput] = useState(false);
   const [videoResultion, setVideoResultion] = useState(null);
+  const [isDirty, setIsDirty] = useState(false);
   const modalRef = useRef();
 
   useEffect(() => {
     //load previus settings if any
-    const args = fileData.requestArguments.get(fileData.targetFormat);
+    const args = fileData.requestArguments?.get(fileData?.targetFormat);
+
     if (args) {
-      if (args.has("frameRate")) {
+      console.log("fileData.requestArguments", args);
+      console.log("fileData.requestArguments", args.has("frameRate"));
+      if (args?.has("frameRate")) {
         setFrameRate(args.get("frameRate"));
       }
 
-      if (args.has("videoResultion")) {
+      if (args?.has("videoResultion")) {
         setVideoResultion(args.get("videoResultion"));
       }
     }
+    setIsDirty((prev) => {
+      console.log("setIsDirty((prev)", prev);
+      return false;
+    });
   }, []);
 
+  //create the current arguments and compare to the previuse one
   useEffect(() => {
-    console.log("setIsDirty", previusState, frameRate, previusState);
-    if (previusState == null) {
-      setIsDirty(frameRate || previusState);
+    const prevArgs = fileData.requestArguments.get(fileData.targetFormat);
+    console.log("isDirty - 38", prevArgs, frameRate, videoResultion);
+    if (prevArgs == undefined) {
+      setIsDirty(frameRate || videoResultion);
     } else {
-      const args = fileData.requestArguments.get(fileData.targetFormat);
+      const prevFrameRate = prevArgs.get("frameRate");
+      const prevVideoResultion = prevArgs.get("videoResultion");
+      console.log("isDirty", prevArgs);
+      console.log("isDirty2", frameRate, videoResultion);
+
+      setIsDirty(
+        frameRate != prevFrameRate || videoResultion != prevVideoResultion,
+      );
     }
-  }, [frameRate, previusState]);
+  }, [frameRate, videoResultion]);
 
   function closeAndSaveCurrnetSettings() {
-    fileData.requestArguments.get(fileData.targetFormat);
-    // setPreviusState({ frameRate: frameRate,videoResultion:videoResultion });
-
-    // if(targetFormat && frameRate)
-    //   fileData.requestArguments.get(targetFormat).set('frameRate', frameRate);
-    // if(targetFormat && videoResultion)
-    //   fileData.requestArguments.get(targetFormat).set('videoResultion', videoResultion);
-
-    // // fileData.requestArguments[FileFormat.GIF].push(`-filter_complex ${frameRate}`)
-    // if(enableFpsInput){
-    //   console.log('changeFpsInput',enableFpsInput)
-    //   .set('fps', frameRate)
-    // }
-
-    // if(videoResultion){
-    //   fileData.requestArguments.get(fileData.targetFormat).set('videoResultion', videoResultion)
-    // }
-
+    console.log(fileData);
+    fileData.requestArguments.set(
+      fileData.targetFormat,
+      new Map([
+        ["frameRate", frameRate],
+        ["videoResultion", videoResultion],
+      ]),
+    );
+    setIsDirty(false);
     modalRef.current.close();
   }
 
@@ -76,64 +73,64 @@ const DefaultVideoSettings = (fileData) => {
       >
         <AiOutlineSetting className="size-6" />
       </button>
-      <dialog id="my_modal_2" ref={modalRef} className="modal">
+      <dialog id="my_modal_3" ref={modalRef} className="modal">
         <div className="modal-box overflow-y-visible">
-          <h3 className="text-lg font-bold">Settings</h3>
-          <div class="flex flex-col space-y-3 p-2 *:rounded-md *:border-l-4 *:border-base-200 *:p-2 *:py-3">
-            <div className="">
-              <div className="label flex w-full justify-between">
-                <span className="label-text">Frames per second</span>
-                <input
-                  type="checkbox"
-                  className="toggle"
-                  checked={enableFpsInput}
-                  onChange={() => {
-                    if (enableFpsInput) {
-                    }
-                    setEnableFpsInput((prevValue) => !prevValue);
-                  }}
-                />
-              </div>
-              <div className="flex w-full justify-between p-2">
-                <input
-                  type="range"
-                  min="1"
-                  max="60"
-                  value={frameRate}
-                  onChange={(e) => setFrameRate(e.target.value)}
-                  className={classnames("range", { hidden: !enableFpsInput })}
-                  step="1"
-                />
-                <input
-                  className={classnames("w-10 pl-4", {
-                    hidden: !enableFpsInput,
-                  })}
-                  type="text"
-                  value={frameRate}
-                />
-              </div>
-            </div>
-            <div className="label flex w-full justify-between">
-              <span className="label-text">Resultion</span>
-              <div className="dropdown">
-                <div tabIndex={0} role="button" className="btn btn-sm m-1">
-                  {videoResultion == null ? "No Change" : videoResultion}
-                </div>
-
-                <ul
-                  tabIndex={0}
-                  className="menu dropdown-content z-[100] w-52 rounded-box bg-base-100 p-2 shadow"
-                >
-                  {resultions.map((f, index) => (
-                    <li className="text-neutral" key={f.id}>
-                      <a onClick={() => setVideoResultion(f.value)}>{f.name}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            {/* 12,15,24,25 */}
+          <div className="flex w-full items-center">
+            <AiOutlineSetting className="size-8" />
+            <p className="pl-2 text-lg font-bold">Settings</p>
           </div>
+
+          <table className="table-auto border-separate border-spacing-y-4 pt-8">
+            <tbody>
+              <tr>
+                <td>
+                  <p className="pr-2">Video Frame Rate</p>
+                </td>
+                <td>
+                  <select
+                    onChange={(e) => setFrameRate(e.target.value)}
+                    value={frameRate}
+                    className="select select-bordered w-full max-w-xs"
+                  >
+                    <option value={null}>No Change</option>
+                    {[1, 2, 5, 10, 12, 15, 20, 25, 30, 40, 50, 60].map(
+                      (value) => {
+                        return (
+                          <option
+                            key={`fps_${value}`}
+                            className="p-2"
+                            value={value}
+                          >
+                            {value}
+                          </option>
+                        );
+                      },
+                    )}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Resultion</td>
+                <td>
+                  <select
+                    onChange={(e) => setVideoResultion(e.target.value)}
+                    value={videoResultion}
+                    className="select select-bordered w-full max-w-xs"
+                  >
+                    <option value={null}>No Change</option>
+                    <option value="3840x2160">2160p (4K): 3840x2160</option>
+                    <option value="2560x1440">1440p (2k): 2560x1440</option>
+                    <option value="1920x1080">1080p (HD): 1920x1080</option>
+                    <option value="1280x720">720p (HD): 1280x720</option>
+                    <option value="854x480">480p (SD): 854x480</option>
+                    <option value="640x360">360p (SD): 640x360</option>
+                    <option value="426x240">240p (SD): 426x240</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
           <div className="flex w-full items-center justify-center">
             <button
               onClick={() => modalRef.current.close()}
@@ -143,7 +140,7 @@ const DefaultVideoSettings = (fileData) => {
             </button>
             <button
               disabled={!isDirty}
-              onClick={closeAndSaveCurrnetSettings}
+              onClick={isDirty ? closeAndSaveCurrnetSettings : null}
               className="btn m-4 mt-8 bg-primary text-primary-content"
             >
               Save

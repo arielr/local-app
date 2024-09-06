@@ -22,9 +22,7 @@ class ConversionTask {
     this.outputFile = null;
     this.fileType = null;
     this.onProgress = null;
-    this.requestArguments = new Map([
-      // [FileFormat.GIF, new Map([])]
-    ]);
+    this.requestArguments = new Map();
   }
 
   getOutputFileName() {

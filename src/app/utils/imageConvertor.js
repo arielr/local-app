@@ -11,8 +11,6 @@ class ImageConvertor {
     this.ffmpeg.on("log", ({ message }) => {
       console.log(message);
     });
-    // toBlobURL is used to bypass CORS issue, urls with the same
-    // domain can be used directly.
     await this.ffmpeg.load({
       coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),
       wasmURL: await toBlobURL(
@@ -36,6 +34,8 @@ class ImageConvertor {
     const requestBuilder = new FfMpegCommandBuilder(fileData);
     var uint8Array = new Uint8Array(await file.arrayBuffer());
     await this.ffmpeg.writeFile(file.name, uint8Array);
+    const args = requestBuilder.build();
+    console.log(args);
     await this.ffmpeg.exec(requestBuilder.build());
     // const sourceFileData =  await this.ffmpeg.exec(['-i', file.name,""]);
     // console.log('fileData',sourceFileData);
@@ -45,6 +45,18 @@ class ImageConvertor {
     return new File([blob], fileData.getOutputFileName(), {
       type: `image/${fileData.targetFormat.extension}`,
     });
+  }
+
+  async getData(fileData) {
+    const { file, targetFormat, requestArguments } = fileData;
+
+    this.ffmpeg.on("progress", (event) => {
+      fileData?.onProgress(event.progress);
+    });
+
+    var uint8Array = new Uint8Array(await file.arrayBuffer());
+    await this.ffmpeg.writeFile(file.name, uint8Array);
+    await this.ffmpeg.exec(["i", file.name, "output" + file.name]);
   }
 }
 

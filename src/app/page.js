@@ -61,6 +61,11 @@ export default function Home() {
   async function convertFiles() {
     for (let index = 0; index < selectedFiles.length; index++) {
       const fileData = selectedFiles[index];
+      if (!fileData.targetFormat || fileData.outputFile) {
+        console.log("skipping", fileData);
+        continue;
+      }
+
       fileData.status = Status.PROCESSING;
       setSelectedFiles((prevState) => [...prevState]);
       const result = await imageConvertor.current
@@ -83,7 +88,7 @@ export default function Home() {
   return (
     <main className="flex h-screen min-h-screen flex-col items-center justify-start bg-base-200 font-bricolage-grotesque">
       {/* Toolbar */}
-      <div className="flex w-full items-center bg-base-100 p-4 shadow-md">
+      <div className="ml-2 mt-4 flex w-full items-center rounded-l-full bg-base-100 p-4">
         <div className="size-16 overflow-visible rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
           <CgTerrain className="size-full text-base-100" />
         </div>

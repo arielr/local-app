@@ -11,7 +11,11 @@ class FfMpegCommandBuilder {
 
     var joinedArgs = [];
     if (args) {
-      joinedArgs = Array.from(args[Symbol.iterator]().map((a) => a.join("=")));
+      joinedArgs = Array.from(
+        args[Symbol.iterator]()
+          .filter((a) => a[1])
+          .map((a) => a.join("=")),
+      );
     }
 
     return [

@@ -26,7 +26,7 @@ const FileFormat = Object.freeze({
   HDR: { name: "HDR", extension: "", category: FileCategory.IMAGE },
   JPEG: { name: "JPEG", extension: "jpeg", category: FileCategory.IMAGE },
   JPEG2000: {
-    name: "JPEG2000",
+    name: "JP2",
     extension: "jpeg",
     category: FileCategory.IMAGE,
   },
