@@ -3,7 +3,11 @@ import { AiOutlineDown } from "react-icons/ai";
 import { FileFormat, FileCategory } from "../../entities/FileFormat";
 import classNames from "classnames";
 
-const formats = [FileFormat.getImageFormats(), FileFormat.getVideoFormats()];
+const formats = [
+  FileFormat.getImageFormats(),
+  FileFormat.getVideoFormats(),
+  FileFormat.getAudioFormats(),
+];
 
 const TargetFormatDropdown = ({ updateSelectedFormat }) => {
   const [selectedFormat, setSelectedFormat] = useState(null);
@@ -52,6 +56,14 @@ const TargetFormatDropdown = ({ updateSelectedFormat }) => {
               onMouseEnter={() => setSelectedFormatType(1)}
             >
               Video
+            </li>
+            <li
+              className={classNames("hover:bg-slate-200", {
+                "bg-slate-200": selectedFormatType == 2,
+              })}
+              onMouseEnter={() => setSelectedFormatType(2)}
+            >
+              Audio
             </li>
           </ul>
         </div>

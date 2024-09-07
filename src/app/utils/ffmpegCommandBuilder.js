@@ -17,13 +17,17 @@ class FfMpegCommandBuilder {
           .map((a) => a.join("=")),
       );
     }
-
-    return [
-      "-i",
-      file.name,
-      this.conversionTask.getOutputFileName(),
-      "-filter:v",
-    ].concat(joinedArgs);
+    if (joinedArgs.length > 0) {
+      joinedArgs = ["-filter:v", ...joinedArgs];
+    }
+    console.log(
+      ["-i", file.name, this.conversionTask.getOutputFileName(), ,].concat(
+        joinedArgs,
+      ),
+    );
+    return ["-i", file.name, this.conversionTask.getOutputFileName()].concat(
+      joinedArgs,
+    );
   }
 }
 

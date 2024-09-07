@@ -104,11 +104,11 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
         {getButtonByStatus(true)}
       </div>
       <div className="h-4 w-full sm:hidden"></div>
-      <div className="flex w-full items-center justify-between space-x-2 sm:w-fit sm:flex-row sm:justify-end">
+      <div className="flex w-full items-center justify-between space-x-2 sm:w-1/3 sm:flex-row sm:justify-end">
         <div className="badge badge-md sm:hidden">
           {FilesUtils.formatBytes(file?.size)}
         </div>
-        <div className="pr-5">
+        <div className="px-2">
           <TargetFormatDropdown
             updateSelectedFormat={(newFileFormat) => {
               console.log("TargetFormatDropdown", newFileFormat);

@@ -31,12 +31,17 @@ class ImageConvertor {
       fileData?.onProgress(event.progress);
     });
 
+    this.ffmpeg.on("log", (event) => {
+      console.log("ERRRORRRRRRR", event);
+    });
+
     const requestBuilder = new FfMpegCommandBuilder(fileData);
     var uint8Array = new Uint8Array(await file.arrayBuffer());
     await this.ffmpeg.writeFile(file.name, uint8Array);
     const args = requestBuilder.build();
     console.log(args);
-    await this.ffmpeg.exec(requestBuilder.build());
+    const errorCode = await this.ffmpeg.exec(requestBuilder.build());
+    console.log("ERROR CODE", errorCode);
     // const sourceFileData =  await this.ffmpeg.exec(['-i', file.name,""]);
     // console.log('fileData',sourceFileData);
 

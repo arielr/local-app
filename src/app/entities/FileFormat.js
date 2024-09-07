@@ -6,6 +6,8 @@
 const FileCategory = Object.freeze({
   IMAGE: { category: "image" },
   VIDEO: { category: "video" },
+  AUDIO: { category: "audio" },
+
   DOCUMENT: { category: "document" },
 });
 
@@ -15,7 +17,8 @@ const FileCategory = Object.freeze({
  * @enum {{name: string, extension: string, category: FileCategory}}
  */
 const FileFormat = Object.freeze({
-  PDF: { name: "PDF", extension: "pdf", category: FileCategory.IMAGE },
+  // PDF: { name: "PDF", extension: "pdf", category: FileCategory.IMAGE },
+  //IMAGE FORMATS
   YUV: { name: " .Y.U.V", extension: "", category: "image" },
   AliasPIX: { name: "Alias Pix", extension: "", category: FileCategory.IMAGE },
   GIF: { name: "GIF", extension: "gif", category: FileCategory.IMAGE },
@@ -49,39 +52,18 @@ const FileFormat = Object.freeze({
   OGV: { name: "OGV", extension: "ogv", category: FileCategory.VIDEO },
   WEBM: { name: "WEBM", extension: "webm", category: FileCategory.VIDEO },
   WMV: { name: "WMV", extension: "wmv", category: FileCategory.VIDEO },
-  // PNG: {name: "", extension: "", category: FileCategory.VIDEO},
+  AAC: { name: "AAC", extension: "aac", category: FileCategory.AUDIO },
 
-  // PPM: {name: , extension:, category: FileCategory.IMAGE},
-  // QOI: {name: , extension:, category: FileCategory.IMAGE},
-  // SGI: {name: , extension:, category: FileCategory.IMAGE},
-  // SunRasterfile: {name: , extension:, category:  FileCategory.IMAGE},
-  // TIFF: {name: , extension:, category:  FileCategory.IMAGE},
-  // Truevision Targa: {name: , extension:, category:  FileCategory.IMAGE},
-  // VBN: {name: , extension:, category:  FileCategory.IMAGE},
-  // WBMP: {name: , extension:, category:  FileCategory.IMAGE},
-  // XBM: {name: , extension:, category:  FileCategory.IMAGE},
-  // XFace: {name: , extension:, category:  FileCategory.IMAGE},
-  // XWD: {name: , extension:, category:  FileCategory.IMAGE},
-  //     3GP
-  // AVI
-  // FLV
-  // MKV
-  // MOV
-  // MP4
-  // OGV
-  // WEBM
-  // WMV
-
-  // AAC
-  // AIFF
-  // ALAC
-  // AMR
-  // FLAC
-  // M4A
-  // MP3
-  // OGG
-  // WAV
-  // WMA
+  //VIDEO FORMATS
+  AIFF: { name: "AIFF", extension: "aiff", category: FileCategory.AUDIO },
+  ALAC: { name: "ALAC", extension: "alac", category: FileCategory.AUDIO },
+  AMR: { name: "AMR", extension: "amr", category: FileCategory.AUDIO },
+  FLA: { name: "FLA", extension: "fla", category: FileCategory.AUDIO },
+  M4A: { name: "M4A", extension: "m4a", category: FileCategory.AUDIO },
+  MP3: { name: "MP3", extension: "mp3", category: FileCategory.AUDIO },
+  OGG: { name: "OGG", extension: "ogg", category: FileCategory.AUDIO },
+  WAV: { name: "WAV", extension: "wav", category: FileCategory.AUDIO },
+  WMA: { name: "WMA", extension: "wma", category: FileCategory.AUDIO },
 
   getImageFormats() {
     return Object.values(FileFormat).filter(
@@ -91,6 +73,11 @@ const FileFormat = Object.freeze({
   getVideoFormats() {
     return Object.values(FileFormat).filter(
       (obj) => obj.category == FileCategory.VIDEO,
+    );
+  },
+  getAudioFormats() {
+    return Object.values(FileFormat).filter(
+      (obj) => obj.category == FileCategory.AUDIO,
     );
   },
 });

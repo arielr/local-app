@@ -59,7 +59,7 @@ const FileUpload = ({ setFiles }) => {
         {...getRootProps()}
       >
         <input {...getInputProps()} />
-        <div className="flex w-full flex-col items-center justify-center space-y-2">
+        <div className="flex h-full min-h-44 w-full flex-col items-center justify-center space-y-2 p-4">
           <AiOutlineUpload className="size-12" />
           <p className="item-center flex justify-center font-bricolage-grotesque">
             Drag and drop files here or click to browses.
