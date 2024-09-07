@@ -12,6 +12,7 @@
     "@ffmpeg/ffmpeg": "^0.12.10",
     "@ffmpeg/util": "^0.12.1",
     "classnames": "^2.5.1",
+    "coi-serviceworker": "^0.1.7",
     "file-type": "^19.4.1",
     "http-proxy-middleware": "^3.0.2",
     "jszip": "^3.10.1",

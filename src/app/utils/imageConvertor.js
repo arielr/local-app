@@ -4,23 +4,33 @@ import FfMpegCommandBuilder from "./ffmpegCommandBuilder";
 
 class ImageConvertor {
   async load() {
-    const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
-    //const baseURL =  "https://unpkg.com/@ffmpeg/core-mt@0.12.2/dist/esm";
+    console.log("start loading..");
+    // const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
+    const baseURL = "https://unpkg.com/@ffmpeg/core-mt@0.12.2/dist/esm";
     this.ffmpeg = new FFmpeg();
 
     this.ffmpeg.on("log", ({ message }) => {
       console.log(message);
     });
+
+    const coreUrlPromise = toBlobURL(
+      `${baseURL}/ffmpeg-core.js`,
+      "text/javascript",
+    );
+    const wasmUrlPromise = toBlobURL(
+      `${baseURL}/ffmpeg-core.wasm`,
+      "application/wasm",
+    );
+    const workerUrlPromise = toBlobURL(
+      `${baseURL}/ffmpeg-core.worker.js`,
+      "text/javascript",
+    );
+
+    await Promise.all([coreUrlPromise, wasmUrlPromise, workerUrlPromise]);
     await this.ffmpeg.load({
-      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),
-      wasmURL: await toBlobURL(
-        `${baseURL}/ffmpeg-core.wasm`,
-        "application/wasm",
-      ),
-      workerURL: await toBlobURL(
-        `${baseURL}/ffmpeg-core.worker.js`,
-        "text/javascript",
-      ),
+      coreURL: await coreUrlPromise,
+      wasmURL: await wasmUrlPromise,
+      workerURL: await workerUrlPromise,
     });
   }
 

@@ -34,7 +34,7 @@ export default function Home() {
       <div className="flex h-full w-full items-center justify-center">
         {selectedFiles.length == 0 ? (
           <div className="flex flex-col items-center justify-between p-8">
-            <div className="m-2 h-1/3 min-h-40 rounded-xl border-2 border-dashed border-base-300 bg-base-100 sm:h-full sm:w-full sm:max-w-96">
+            <div className="relative m-2 h-1/3 min-h-40 w-full rounded-xl border-2 border-dashed border-base-300 bg-base-100 sm:h-full sm:w-full">
               <FileUpload setFiles={(files) => setSelectedFiles(files)} />
             </div>
             <div className="mt-16 flex w-full flex-col space-y-4 p-8 text-base-content *:rounded-xl *:bg-base-300 *:p-4 sm:flex-row sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0 sm:*:h-52 sm:*:h-full sm:*:w-1/3 sm:*:max-w-64">

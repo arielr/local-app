@@ -14,7 +14,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="cupcake">
       <head>
-        {/* <Script src="coi-serviceworker.js"></Script> */}
+        <Script src="coi-serviceworker.js"></Script>
+        {/* if (!crossOriginIsolated) {
+          SharedArrayBuffer = ArrayBuffer;
+        } */}
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

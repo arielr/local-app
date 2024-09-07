@@ -61,8 +61,11 @@ const FileUpload = ({ setFiles }) => {
         <input {...getInputProps()} />
         <div className="flex h-full min-h-44 w-full flex-col items-center justify-center space-y-2 p-4">
           <AiOutlineUpload className="size-12" />
+          <button className="bg-transparent-20 btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white opacity-75">
+            Select Files
+          </button>
           <p className="item-center flex justify-center font-bricolage-grotesque">
-            Drag and drop files here or click to browses.
+            Drag and drop files here
           </p>
         </div>
 

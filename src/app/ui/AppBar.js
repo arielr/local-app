@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const AppBar = () => {
   return (
-    <div className="ml-2 flex w-full items-center rounded-bl-[40px] bg-base-100 p-4">
+    <div className="ml-2 flex w-full items-center bg-base-100 p-4 sm:rounded-bl-[40px]">
       <div className="size-16 overflow-visible rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
         <CgTerrain className="size-full text-base-100" />
       </div>
