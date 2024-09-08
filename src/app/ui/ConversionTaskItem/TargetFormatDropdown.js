@@ -41,7 +41,7 @@ const TargetFormatDropdown = ({ sourceFormat, updateSelectedFormat }) => {
   }
 
   return (
-    <div className="dropdown- dropdown flex sm:dropdown-left">
+    <div className="dropdown dropdown-end flex">
       <div
         tabIndex={0}
         role="button"
@@ -52,9 +52,9 @@ const TargetFormatDropdown = ({ sourceFormat, updateSelectedFormat }) => {
       </div>
       <div
         tabIndex={0}
-        className="menu dropdown-content z-10 flex w-fit flex-row justify-center space-y-2 rounded-box bg-base-100 px-2 shadow sm:w-96"
+        className="menu dropdown-content z-10 flex flex-row justify-center space-y-2 rounded-box bg-base-100 px-2 shadow sm:w-96"
       >
-        <div className="w-full py-2">
+        <div className="w-full p-2">
           <label className="input input-bordered flex items-center gap-2">
             <input
               type="text"

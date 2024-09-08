@@ -51,8 +51,30 @@ class ConversionTask {
 
   async getSourceFileType() {
     if (this.sourceFormat || this.file == null) return this.sourceFormat;
+
+    const allFileFormats = FileFormat.getAllValues();
     const result = await fileTypeFromStream(this.file.stream());
-    const fileFromat = FileFormat.getAllValues().find((f) => {
+    if (!result) {
+      const ext = this.file.name.split(".").pop();
+      //in case we couldn't get the file type using mime
+      // we will try to find its extension.
+      if (ext) {
+        const fileFormatByExtension = allFileFormats.find(
+          (f) => f.extension == ext || f.exExtension?.includes(result?.ext),
+        );
+        if (fileFormatByExtension) {
+          return fileFormatByExtension;
+        }
+      }
+    } else if (!result.ext && result.mime) {
+      if (result.mime.includes("image")) return FileFormat.UNKNOWN_IMAGE;
+      if (result.mime.includes("video")) return FileFormat.UNKNOWN_VIDEO;
+      if (result.mime.includes("audio")) return FileFormat.UNKNOWN_AUDIO;
+
+      return FileFormat.UNKNOWN;
+    }
+
+    const fileFromat = allFileFormats.find((f) => {
       return f.extension == result.ext || f.exExtension?.includes(result.ext);
     });
     this.sourceFormat = fileFromat;

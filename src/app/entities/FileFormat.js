@@ -7,8 +7,8 @@ const FileCategory = Object.freeze({
   IMAGE: { category: "image" },
   VIDEO: { category: "video" },
   AUDIO: { category: "audio" },
-
   DOCUMENT: { category: "document" },
+  UNKNOWN: { category: "unknown" },
 });
 
 /**
@@ -81,6 +81,29 @@ const FileFormat = Object.freeze({
   WAV: { name: "WAV", extension: "wav", category: FileCategory.AUDIO },
   WMA: { name: "WMA", extension: "wma", category: FileCategory.AUDIO },
 
+  //unkonwn
+  UNKNOWN: {
+    name: "UNKNOWN",
+    extension: "",
+    category: FileCategory.IMAGE,
+  },
+
+  UNKNOWN_IMAGE: {
+    name: "UNKNOWN_IMAGE",
+    extension: "",
+    category: FileCategory.IMAGE,
+  },
+  UNKNOWN_IMAGE: {
+    name: "UNKNOWN_VIDEO",
+    extension: "",
+    category: FileCategory.VIDEO,
+  },
+  UNKNOWN_IMAGE: {
+    name: "UNKNOWN_AUDIO",
+    extension: "",
+    category: FileCategory.AUDIO,
+  },
+
   getImageFormats() {
     return Object.values(FileFormat).filter(
       (obj) => obj.category == FileCategory.IMAGE,
@@ -97,7 +120,9 @@ const FileFormat = Object.freeze({
     );
   },
   getAllValues() {
-    return Object.values(FileFormat);
+    return Object.values(FileFormat).filter(
+      (obj) => obj.category != FileCategory.UNKNOWN || obj.extension != "",
+    );
   },
 });
 
