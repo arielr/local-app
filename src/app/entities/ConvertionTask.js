@@ -23,6 +23,7 @@ class ConversionTask {
     this.fileType = null;
     this.onProgress = null;
     this.requestArguments = new Map();
+    this.logs = [];
   }
 
   getOutputFileName() {
@@ -49,11 +50,14 @@ class ConversionTask {
   }
 
   async getSourceFileType() {
-    console.log(this.file);
     if (this.sourceFormat || this.file == null) return this.sourceFormat;
     const result = await fileTypeFromStream(this.file.stream());
-    this.sourceFormat = result;
-    return result;
+    const fileFromat = FileFormat.getAllValues().find((f) => {
+      return f.extension == result.ext || f.exExtension?.includes(result.ext);
+    });
+    this.sourceFormat = fileFromat;
+
+    return fileFromat;
   }
 
   isFileHasSettings() {

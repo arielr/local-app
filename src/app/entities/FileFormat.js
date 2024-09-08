@@ -22,12 +22,22 @@ const FileFormat = Object.freeze({
   YUV: { name: " .Y.U.V", extension: "", category: "image" },
   AliasPIX: { name: "Alias Pix", extension: "", category: FileCategory.IMAGE },
   GIF: { name: "GIF", extension: "gif", category: FileCategory.IMAGE },
-  APNG: { name: "APNG", extension: "", category: FileCategory.IMAGE },
+  APNG: {
+    name: "APNG",
+    extension: "png",
+    exExtension: ["apng"],
+    category: FileCategory.IMAGE,
+  },
   BMP: { name: "BMP", extension: "bmp", category: FileCategory.IMAGE },
   DPX: { name: "DPX", extension: "dpx", category: FileCategory.IMAGE },
   FITS: { name: "FITS", extension: "fits", category: FileCategory.IMAGE },
   HDR: { name: "HDR", extension: "", category: FileCategory.IMAGE },
-  JPEG: { name: "JPEG", extension: "jpeg", category: FileCategory.IMAGE },
+  JPEG: {
+    name: "JPEG",
+    extension: "jpeg",
+    exExtension: ["jpg"],
+    category: FileCategory.IMAGE,
+  },
   JPEG2000: {
     name: "JP2",
     extension: "jpeg",
@@ -43,6 +53,7 @@ const FileFormat = Object.freeze({
   PGMYUV: { name: "PGMYUV", extension: "pgmyuv", category: FileCategory.IMAGE },
   PHM: { name: "PHM", extension: "phm", category: FileCategory.IMAGE },
   PNG: { name: "PNG", extension: "png", category: FileCategory.IMAGE },
+  WebP: { name: "WebP", extension: "webp", category: FileCategory.IMAGE },
 
   // VIDEO FORMATS
   THREEGP: { name: "3GP", extension: "3gp", category: FileCategory.VIDEO },
@@ -79,6 +90,9 @@ const FileFormat = Object.freeze({
     return Object.values(FileFormat).filter(
       (obj) => obj.category == FileCategory.AUDIO,
     );
+  },
+  getAllValues() {
+    return Object.values(FileFormat);
   },
 });
 

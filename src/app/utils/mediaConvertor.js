@@ -9,9 +9,9 @@ class MediaConvertor {
     const baseURL = "https://unpkg.com/@ffmpeg/core-mt@0.12.2/dist/esm";
     this.ffmpeg = new FFmpeg();
 
-    this.ffmpeg.on("log", ({ message }) => {
-      console.log(message);
-    });
+    // this.ffmpeg.on("log", ({ message }) => {
+    //   console.log(message);
+    // });
 
     const coreUrlPromise = toBlobURL(
       `${baseURL}/ffmpeg-core.js`,
@@ -42,7 +42,7 @@ class MediaConvertor {
     });
 
     this.ffmpeg.on("log", (event) => {
-      console.log("ERRRORRRRRRR", event);
+      fileData.logs.push(event);
     });
 
     const requestBuilder = new FfMpegCommandBuilder(fileData);

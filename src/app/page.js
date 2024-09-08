@@ -30,7 +30,7 @@ export default function Home() {
       <div className="flex h-full w-full items-center justify-center">
         {selectedFiles.length == 0 ? (
           <div className="flex flex-col items-center justify-between p-8">
-            <div className="relative m-2 h-1/3 min-h-40 w-full cursor-pointer rounded-xl border-2 border-dashed border-base-300 bg-base-100 hover:border-solid hover:border-purple-400 sm:h-full sm:w-full">
+            <div className="relative h-1/3 min-h-40 w-full cursor-pointer rounded-xl border-2 border-dashed border-base-300 bg-base-100 hover:border-purple-500 hover:shadow-xl focus:m-4 focus:p-20 sm:h-full sm:w-full">
               <FileUpload setFiles={(files) => setSelectedFiles(files)} />
             </div>
             <AdvantageCards />

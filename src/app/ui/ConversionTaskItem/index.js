@@ -19,20 +19,19 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
   const [sourceFormat, setSourceFormat] = useState("Unkown");
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    fileData.onProgress = setProgress;
-  }, []);
+  //   useEffect(() => {
+
+  //   }, []);
 
   useEffect(() => {
+    fileData.onProgress = setProgress;
     if (fileData.file) {
       fileData.getSourceFileType().then((res) => {
-        console.log("getSourceFileType", res);
-        if (res?.mime) {
-          setSourceFormat(res.mime);
-        }
+        console.log("ssss", res);
+        setSourceFormat(res);
       });
     }
-  }, [file]);
+  }, []);
 
   function downloadFile() {
     FilesUtils.downloadFile(converted);
@@ -110,6 +109,7 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
         </div>
         <div className="px-2">
           <TargetFormatDropdown
+            sourceFormat={sourceFormat}
             updateSelectedFormat={(newFileFormat) => {
               console.log("TargetFormatDropdown", newFileFormat);
               fileData.targetFormat = newFileFormat;

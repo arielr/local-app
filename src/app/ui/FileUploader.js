@@ -23,35 +23,6 @@ const FileUpload = ({ setFiles }) => {
     },
   });
 
-  // const transcode = async (file) => {
-  //   const ffmpeg = ffmpegRef.current;
-  //   var uint8Array =  new Uint8Array(await file.arrayBuffer());
-  //   var write_status = await ffmpeg.writeFile(file.name, uint8Array);
-  //   var result_status = await ffmpeg.exec(['-i', file.name, 'output1.png']);
-  //   console.log(`3 status ${result_status}`);
-
-  //   const data = await ffmpeg.readFile('output1.png');
-
-  //   console.log(data);
-
-  // }
-
-  // const load = async () => {
-  //   console.log('ariel');
-  //   const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd'
-  //   const ffmpeg = ffmpegRef.current;
-  //   ffmpeg.on('log', ({ message }) => {
-  //       // messageRef.current.innerHTML = message;
-  //       console.log(message);
-  //   });
-  //   // toBlobURL is used to bypass CORS issue, urls with the same
-  //   // domain can be used directly.
-  //   await ffmpeg.load({
-  //       coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-  //       wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
-  //   });
-  // }
-
   return (
     <>
       <div
@@ -61,7 +32,7 @@ const FileUpload = ({ setFiles }) => {
         <input {...getInputProps()} />
         <div className="flex h-full min-h-44 w-full flex-col items-center justify-center space-y-2 p-4">
           <AiOutlineUpload className="size-12" />
-          <button className="bg-transparent-20 btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white opacity-75">
+          <button className="bg-transparent-20 btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white opacity-75 hover:-translate-x-1 hover:-translate-y-1">
             Select Files
           </button>
           <p className="item-center flex justify-center font-bricolage-grotesque">

@@ -29,7 +29,7 @@ export default function FilesConvertionScreen({ inputFiles }) {
 
   function handleSelectedFiles(files) {
     const fileDataList = files.map((file, index) => {
-      return new ConversionTask({ file: file, fileFormat: null, id: index });
+      return new ConversionTask({ file: file, id: index });
     });
     setSelectedFiles(fileDataList);
   }
@@ -56,7 +56,7 @@ export default function FilesConvertionScreen({ inputFiles }) {
     console.log("selectedFiles", selectedFiles);
     return (
       <ConversionTaskItem
-        key={file.id}
+        key={index}
         fileData={file}
         updateItem={updateItem}
         removeItem={removeItem}
