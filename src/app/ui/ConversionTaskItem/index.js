@@ -74,7 +74,7 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
           <div className="btn btn-square">
             <div
               className="tooltip-open tooltip-error hover:tooltip"
-              data-tip={fileData.error}
+              data-tip={fileData.getErrorMessage()}
             >
               <AiOutlineExclamationCircle className="size-7 text-error" />
             </div>

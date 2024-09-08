@@ -20,7 +20,12 @@ const FileFormat = Object.freeze({
   // PDF: { name: "PDF", extension: "pdf", category: FileCategory.IMAGE },
   //IMAGE FORMATS
   YUV: { name: " .Y.U.V", extension: "", category: "image" },
-  AliasPIX: { name: "Alias Pix", extension: "", category: FileCategory.IMAGE },
+  AliasPIX: {
+    name: "Alias Pix",
+    extension: "pix",
+    exExtension: ["img", "als", "pix"],
+    category: FileCategory.IMAGE,
+  },
   GIF: { name: "GIF", extension: "gif", category: FileCategory.IMAGE },
   APNG: {
     name: "APNG",
@@ -31,7 +36,7 @@ const FileFormat = Object.freeze({
   BMP: { name: "BMP", extension: "bmp", category: FileCategory.IMAGE },
   DPX: { name: "DPX", extension: "dpx", category: FileCategory.IMAGE },
   FITS: { name: "FITS", extension: "fits", category: FileCategory.IMAGE },
-  HDR: { name: "HDR", extension: "", category: FileCategory.IMAGE },
+  // HDR: { name: "HDR", extension: "hdr", category: FileCategory.IMAGE },
   JPEG: {
     name: "JPEG",
     extension: "jpeg",
@@ -43,7 +48,7 @@ const FileFormat = Object.freeze({
     extension: "jpeg",
     category: FileCategory.IMAGE,
   },
-  JPEG_LS: { name: "JPEG-LS", extension: "", category: FileCategory.IMAGE },
+  JPEG_LS: { name: "JPEG-LS", extension: "jls", category: FileCategory.IMAGE },
   LJPEG: { name: "LJPEG", extension: "ljpeg", category: FileCategory.IMAGE },
   PAM: { name: "PAM", extension: "pam", category: FileCategory.IMAGE },
   PBM: { name: "PBM", extension: "pbm", category: FileCategory.IMAGE },

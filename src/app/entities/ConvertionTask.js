@@ -63,5 +63,15 @@ class ConversionTask {
   isFileHasSettings() {
     return this.targetFormat == FileFormat.GIF;
   }
+
+  getErrorMessage() {
+    const errorLastIndex = this.logs.findIndex((event) => {
+      return event.message.includes("Aborted()");
+    });
+
+    console.log("errorLastIndex", this.logs[errorLastIndex]);
+
+    return `${this.logs[errorLastIndex - 2]?.message} \n ${this.logs[errorLastIndex - 1]?.message}`;
+  }
 }
 export { ConversionTask, Status };

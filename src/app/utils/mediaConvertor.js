@@ -42,6 +42,7 @@ class MediaConvertor {
     });
 
     this.ffmpeg.on("log", (event) => {
+      console.log(event.message);
       fileData.logs.push(event);
     });
 
