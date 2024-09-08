@@ -9,7 +9,7 @@ import FileUpload from "../ui/FileUploader";
 import AppBar from "../ui/AppBar";
 import ConversionTaskItem from "../ui/ConversionTaskItem/index.js";
 import { ConversionTask, Status } from "../entities/ConvertionTask";
-import ImageConvertor from "../utils/imageConvertor.js";
+import ImageConvertor from "../utils/mediaConvertor.js/index.js";
 import FilesUtils from "../utils/filesUtils";
 
 /**
@@ -106,7 +106,7 @@ export default function FilesConvertionScreen({ inputFiles }) {
       {selectedFiles.length == 0 && (
         <div className="flex h-full w-full items-start justify-center">
           {/* File updalder */}
-          <div className="h-1/3 rounded-xl border-2 border-dashed border-base-300 bg-base-100 sm:w-1/2">
+          <div className="border-12 h-1/3 rounded-xl border-dashed border-base-300 bg-base-100 hover:border-green-200 sm:w-1/2">
             <FileUpload setFiles={handleSelectedFiles} />
           </div>
         </div>

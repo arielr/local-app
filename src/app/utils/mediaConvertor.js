@@ -2,7 +2,7 @@ import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile, toBlobURL } from "@ffmpeg/util";
 import FfMpegCommandBuilder from "./ffmpegCommandBuilder";
 
-class ImageConvertor {
+class MediaConvertor {
   async load() {
     console.log("start loading..");
     // const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
@@ -75,4 +75,4 @@ class ImageConvertor {
   }
 }
 
-export default ImageConvertor;
+export default MediaConvertor;
