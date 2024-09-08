@@ -9,7 +9,7 @@ import FileUpload from "../ui/FileUploader";
 import AppBar from "../ui/AppBar";
 import ConversionTaskItem from "../ui/ConversionTaskItem/index.js";
 import { ConversionTask, Status } from "../entities/ConvertionTask";
-import ImageConvertor from "../utils/mediaConvertor.js/index.js";
+import MediaConvertor from "../utils/mediaConvertor";
 import FilesUtils from "../utils/filesUtils";
 
 /**
@@ -18,10 +18,10 @@ import FilesUtils from "../utils/filesUtils";
 export default function FilesConvertionScreen({ inputFiles }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const inputFileRef = useRef(null);
-  const imageConvertor = useRef(new ImageConvertor());
+  const mediaConvertor = useRef(new MediaConvertor());
 
   useEffect(() => {
-    imageConvertor.current.load().then(() => {
+    mediaConvertor.current.load().then(() => {
       console.log("loaded!!");
     });
     handleSelectedFiles(inputFiles);
@@ -74,7 +74,7 @@ export default function FilesConvertionScreen({ inputFiles }) {
 
       fileData.status = Status.PROCESSING;
       setSelectedFiles((prevState) => [...prevState]);
-      const result = await imageConvertor.current
+      const result = await mediaConvertor.current
         .convert(fileData)
         .catch((error) => {
           console.error(error);
