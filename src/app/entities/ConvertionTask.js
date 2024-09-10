@@ -54,8 +54,8 @@ class ConversionTask {
 
     const allFileFormats = FileFormat.getAllValues();
     const result = await fileTypeFromStream(this.file.stream());
+    var ext = this.file.name.split(".").pop();
     if (!result) {
-      const ext = this.file.name.split(".").pop();
       //in case we couldn't get the file type using mime
       // we will try to find its extension.
       if (ext) {
@@ -73,9 +73,11 @@ class ConversionTask {
 
       return FileFormat.UNKNOWN;
     }
-
+    if (result?.ext) {
+      ext = result.ext;
+    }
     const fileFromat = allFileFormats.find((f) => {
-      return f.extension == result.ext || f.exExtension?.includes(result.ext);
+      return f.extension == ext || f.exExtension?.includes(ext);
     });
     this.sourceFormat = fileFromat;
 

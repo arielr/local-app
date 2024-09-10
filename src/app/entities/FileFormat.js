@@ -83,40 +83,43 @@ const FileFormat = Object.freeze({
 
   //unkonwn
   UNKNOWN: {
-    name: "UNKNOWN",
+    name: "_UNKNOWN",
     extension: "",
-    category: FileCategory.IMAGE,
+    category: FileCategory.NONE,
   },
 
   UNKNOWN_IMAGE: {
-    name: "UNKNOWN_IMAGE",
+    name: "_UNKNOWN_IMAGE",
     extension: "",
     category: FileCategory.IMAGE,
   },
-  UNKNOWN_IMAGE: {
-    name: "UNKNOWN_VIDEO",
+  UNKNOWN_VIDEO: {
+    name: "_UNKNOWN_VIDEO",
     extension: "",
     category: FileCategory.VIDEO,
   },
-  UNKNOWN_IMAGE: {
-    name: "UNKNOWN_AUDIO",
+  UNKNOWN_AUDIO: {
+    name: "_UNKNOWN_AUDIO",
     extension: "",
     category: FileCategory.AUDIO,
   },
 
   getImageFormats() {
     return Object.values(FileFormat).filter(
-      (obj) => obj.category == FileCategory.IMAGE,
+      (obj) =>
+        obj.category == FileCategory.IMAGE && obj != FileFormat.UNKNOWN_IMAGE,
     );
   },
   getVideoFormats() {
     return Object.values(FileFormat).filter(
-      (obj) => obj.category == FileCategory.VIDEO,
+      (obj) =>
+        obj.category == FileCategory.VIDEO && obj != FileFormat.UNKNOWN_VIDEO,
     );
   },
   getAudioFormats() {
     return Object.values(FileFormat).filter(
-      (obj) => obj.category == FileCategory.AUDIO,
+      (obj) =>
+        obj.category == FileCategory.AUDIO && obj != FileFormat.UNKNOWN_AUDIO,
     );
   },
   getAllValues() {
