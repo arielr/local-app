@@ -1,3 +1,4 @@
+import { FileCategory, FileFormat } from "../entities/FileFormat";
 import ConversionTask from "../ui/ConversionTaskItem";
 
 class FfMpegCommandBuilder {
@@ -6,7 +7,8 @@ class FfMpegCommandBuilder {
   }
 
   build() {
-    const { file, targetFormat, requestArguments } = this.conversionTask;
+    const { file, targetFormat, requestArguments, sourceFormat } =
+      this.conversionTask;
     const args = requestArguments.get(targetFormat);
 
     var joinedArgs = [];
@@ -17,17 +19,27 @@ class FfMpegCommandBuilder {
           .map((a) => a.join("=")),
       );
     }
+
     if (joinedArgs.length > 0) {
-      joinedArgs = ["-filter:v", ...joinedArgs];
+      joinedArgs = ["-vf", ...joinedArgs];
     }
-    console.log(
-      ["-i", file.name, this.conversionTask.getOutputFileName(), ,].concat(
-        joinedArgs,
-      ),
-    );
-    return ["-i", file.name, this.conversionTask.getOutputFileName()].concat(
-      joinedArgs,
-    );
+
+    if (
+      sourceFormat.category == FileCategory.VIDEO &&
+      targetFormat.category == FileCategory.IMAGE &&
+      targetFormat != FileFormat.GIF &&
+      targetFormat != FileFormat.WebP
+    ) {
+      joinedArgs.push("-ss 00:00:01");
+    }
+
+    return [
+      "-i",
+      file.name,
+      //   "-c",
+      //   "copy",
+      this.conversionTask.getOutputFileName(),
+    ].concat(joinedArgs);
   }
 }
 

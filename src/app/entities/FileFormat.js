@@ -36,7 +36,7 @@ const FileFormat = Object.freeze({
   BMP: { name: "BMP", extension: "bmp", category: FileCategory.IMAGE },
   DPX: { name: "DPX", extension: "dpx", category: FileCategory.IMAGE },
   FITS: { name: "FITS", extension: "fits", category: FileCategory.IMAGE },
-  // HDR: { name: "HDR", extension: "hdr", category: FileCategory.IMAGE },
+  HDR: { name: "HDR", extension: "hdr", category: FileCategory.IMAGE },
   JPEG: {
     name: "JPEG",
     extension: "jpeg",
@@ -45,7 +45,7 @@ const FileFormat = Object.freeze({
   },
   JPEG2000: {
     name: "JP2",
-    extension: "jpeg",
+    extension: "jp2",
     category: FileCategory.IMAGE,
   },
   JPEG_LS: { name: "JPEG-LS", extension: "jls", category: FileCategory.IMAGE },

@@ -5,9 +5,13 @@ import {
   AiOutlineDownload,
   AiOutlineExclamationCircle,
   AiOutlineSetting,
+  AiOutlineDelete,
 } from "react-icons/ai";
 import { useState, useEffect } from "react";
-import { ConversionTask, Status } from "../../entities/ConvertionTask.js";
+import {
+  ConversionTask,
+  ConversionStatus,
+} from "../../entities/ConvertionTask.js";
 import { FileFormat, FileCategory } from "../../entities/FileFormat.js";
 import FilesUtils from "../../utils/filesUtils.js";
 import DefaultVideoSettings from "../ExtensionSettings/DefaultVideoSettings.js";
@@ -19,15 +23,10 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
   const [sourceFormat, setSourceFormat] = useState("Unkown");
   const [progress, setProgress] = useState(0);
 
-  //   useEffect(() => {
-
-  //   }, []);
-
   useEffect(() => {
     fileData.onProgress = setProgress;
     if (fileData.file) {
       fileData.getSourceFileType().then((res) => {
-        console.log("ssss", res);
         setSourceFormat(res);
       });
     }
@@ -38,30 +37,56 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
   }
 
   function getSettingsButton() {
-    if (targetFormat?.category == FileCategory.VIDEO) {
-      const key = `settings_${fileData.id}_${fileData.targetFormat.name}`;
+    if (
+      (targetFormat?.category == FileCategory.VIDEO ||
+        targetFormat == FileFormat.GIF ||
+        targetFormat == FileFormat.WebP) &&
+      status != ConversionStatus.PROCESSING &&
+      !converted
+    ) {
+      const key = `settings_${fileData.id}_${fileData.targetFormat.name}_${targetFormat?.status}`;
       return <DefaultVideoSettings key={key} {...fileData} />;
     }
 
     return (
-      <button disabled={true} className="btn btn-sm sm:btn-md">
-        <AiOutlineSetting className="size-6" />
+      <button
+        disabled={true}
+        className="btn btn-sm h-full bg-red-200 sm:btn-md"
+      >
+        <AiOutlineSetting className="size-5" />
       </button>
     );
   }
 
+  // function getSettingsButton() {
+  //   const key = `settings_${fileData.id}_${fileData?.targetFormat?.name}`;
+  //   const enableSettings =
+  //     targetFormat?.category == FileCategory.VIDEO && !targetFormat?.converted;
+  //   return (
+  //     <DefaultVideoSettings
+  //       key={key}
+  //       {...fileData}
+  //       isDisabled={!enableSettings}
+  //     />
+  //   );
+  // }
+
   function getButtonByStatus(isSmallScreen) {
     return (
-      <div className={isSmallScreen ? "inline sm:hidden" : "hidden sm:inline"}>
-        {status == Status.NONE && (
+      <div
+        className={
+          isSmallScreen ? "w-fill inline p-2 sm:hidden" : "hidden sm:inline"
+        }
+      >
+        {status == ConversionStatus.NONE && (
           <button
-            className="btn btn-square btn-sm items-center justify-center sm:btn-md sm:flex"
+            className="items-center justify-center bg-base-100 sm:flex"
             onClick={() => removeItem(fileData)}
           >
-            <AiOutlineClose className="size-full p-2 hover:text-accent" />
+            <AiOutlineDelete className="size-6 text-base-300 hover:text-accent" />
           </button>
         )}
-        {status === Status.PROCESSING && (
+        {status === ConversionStatus.PROCESSING && (
           <div
             className="radial-progress text-sm text-base-content"
             style={{ "--value": progress * 100, "--size": "3rem" }}
@@ -70,7 +95,7 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
             {Math.round(progress * 100)}%
           </div>
         )}
-        {status === Status.ERROR && (
+        {status === ConversionStatus.ERROR && (
           <div className="btn btn-square">
             <div
               className="tooltip-open tooltip-error hover:tooltip"
@@ -81,9 +106,12 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
           </div>
         )}
 
-        {status == Status.DONE && (
-          <button className="btn btn-square" onClick={downloadFile}>
-            <AiOutlineDownload className="size-7" />
+        {status == ConversionStatus.DONE && (
+          <button
+            className="btn btn-square btn-sm aspect-square sm:btn-md"
+            onClick={downloadFile}
+          >
+            <AiOutlineDownload className="size-6" />
           </button>
         )}
       </div>
@@ -91,36 +119,37 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
   }
 
   return (
-    <div className="flex w-11/12 flex-col items-center justify-between rounded-xl border-2 border-base-300 bg-base-100 px-2 py-3 text-secondary-content shadow-md sm:flex-row sm:px-6">
-      <div className="w-fill flex w-full flex-row items-center justify-between sm:justify-start">
-        <AiOutlineFileImage className="hidden size-8 text-base-content sm:inline" />
-        <div className="flex flex-col items-start justify-center pl-2 sm:pl-3 md:flex-row md:items-center">
+    <div className="flex w-11/12 flex-col items-center justify-between rounded-xl border-2 border-base-300 bg-base-100 p-4 text-secondary-content shadow-md sm:flex-row sm:px-6 sm:py-4">
+      <div className="flex w-full flex-row items-center justify-between sm:w-fit sm:justify-between">
+        <div className="flex flex-row items-center justify-center space-x-2 sm:pl-3 md:items-center">
+          <AiOutlineFileImage className="hidden size-8 text-base-content sm:inline" />
           <p className="line-clamp-1 text-primary-content">{file?.name}</p>
-          <div className="badge hidden sm:ml-2 sm:block">
+          <div className="text-sm text-gray-400">
             {FilesUtils.formatBytes(file?.size)}
           </div>
         </div>
+
         {getButtonByStatus(true)}
       </div>
-      <div className="h-4 w-full sm:hidden"></div>
-      <div className="flex w-full items-center justify-between space-x-2 sm:w-1/3 sm:flex-row sm:justify-end">
-        <div className="badge badge-md sm:hidden">
+      <div className="h-fill mt-4 flex w-full justify-between space-x-4 px-2 sm:mt-0 sm:w-fit">
+        <TargetFormatDropdown
+          disabled={status == ConversionStatus.PROCESSING}
+          sourceFormat={sourceFormat}
+          updateSelectedFormat={(newFileFormat) => {
+            console.log("TargetFormatDropdown", newFileFormat);
+            fileData.updateFileFormat(newFileFormat);
+            updateItem(fileData);
+          }}
+        />
+        {getSettingsButton()}
+      </div>
+      {/* <div className="h-4 w-full sm:hidden"></div> */}
+      {/* <div className="flex h-full items-center justify-between space-x-2 px-2 sm:flex-row sm:justify-between">
+        <div className="hidden text-gray-400">
           {FilesUtils.formatBytes(file?.size)}
         </div>
-        <div className="px-2">
-          <TargetFormatDropdown
-            sourceFormat={sourceFormat}
-            updateSelectedFormat={(newFileFormat) => {
-              console.log("TargetFormatDropdown", newFileFormat);
-              fileData.targetFormat = newFileFormat;
-              updateItem(fileData);
-            }}
-          />
-        </div>
-
-        {getSettingsButton()}
-        {getButtonByStatus(false)}
-      </div>
+      </div> */}
+      {getButtonByStatus(false)}
     </div>
   );
 };

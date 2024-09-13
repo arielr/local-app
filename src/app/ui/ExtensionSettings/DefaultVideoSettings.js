@@ -6,10 +6,11 @@ import classnames from "classnames";
 import { file } from "jszip";
 
 const NO_CHANGE = "No Change";
+const FRAME_PER_SECOND_KEY = "fps";
 
 const DefaultVideoSettings = (fileData) => {
-  const [frameRate, setFrameRate] = useState(null);
-  const [videoResultion, setVideoResultion] = useState(null);
+  const [frameRate, setFrameRate] = useState();
+  const [videoResultion, setVideoResultion] = useState();
   const [isDirty, setIsDirty] = useState(false);
   const modalRef = useRef();
 
@@ -18,10 +19,8 @@ const DefaultVideoSettings = (fileData) => {
     const args = fileData.requestArguments?.get(fileData?.targetFormat);
 
     if (args) {
-      console.log("fileData.requestArguments", args);
-      console.log("fileData.requestArguments", args.has("frameRate"));
-      if (args?.has("frameRate")) {
-        setFrameRate(args.get("frameRate"));
+      if (args?.has(FRAME_PER_SECOND_KEY)) {
+        setFrameRate(args.get(FRAME_PER_SECOND_KEY));
       }
 
       if (args?.has("videoResultion")) {
@@ -29,7 +28,6 @@ const DefaultVideoSettings = (fileData) => {
       }
     }
     setIsDirty((prev) => {
-      console.log("setIsDirty((prev)", prev);
       return false;
     });
   }, []);
@@ -37,14 +35,11 @@ const DefaultVideoSettings = (fileData) => {
   //create the current arguments and compare to the previuse one
   useEffect(() => {
     const prevArgs = fileData.requestArguments.get(fileData.targetFormat);
-    console.log("isDirty - 38", prevArgs, frameRate, videoResultion);
     if (prevArgs == undefined) {
       setIsDirty(frameRate || videoResultion);
     } else {
-      const prevFrameRate = prevArgs.get("frameRate");
+      const prevFrameRate = prevArgs.get(FRAME_PER_SECOND_KEY);
       const prevVideoResultion = prevArgs.get("videoResultion");
-      console.log("isDirty", prevArgs);
-      console.log("isDirty2", frameRate, videoResultion);
 
       setIsDirty(
         frameRate != prevFrameRate || videoResultion != prevVideoResultion,
@@ -53,11 +48,10 @@ const DefaultVideoSettings = (fileData) => {
   }, [frameRate, videoResultion]);
 
   function closeAndSaveCurrnetSettings() {
-    console.log(fileData);
     fileData.requestArguments.set(
       fileData.targetFormat,
       new Map([
-        ["frameRate", frameRate],
+        [FRAME_PER_SECOND_KEY, frameRate],
         ["videoResultion", videoResultion],
       ]),
     );
@@ -74,13 +68,13 @@ const DefaultVideoSettings = (fileData) => {
         <AiOutlineSetting className="size-6" />
       </button>
       <dialog id="my_modal_3" ref={modalRef} className="modal">
-        <div className="modal-box overflow-y-visible">
+        <div className="modal-box">
           <div className="flex w-full items-center">
             <AiOutlineSetting className="size-8" />
             <p className="pl-2 text-lg font-bold">Settings</p>
           </div>
 
-          <table className="table-auto border-separate border-spacing-y-4 pt-8">
+          <table className="table-auto border-separate border-spacing-y-4 overflow-y-auto pt-8">
             <tbody>
               <tr>
                 <td>
@@ -128,6 +122,17 @@ const DefaultVideoSettings = (fileData) => {
                   </select>
                 </td>
               </tr>
+              {/* <tr>
+                <div className="collapse bg-base-200">
+                  <input type="checkbox" className="peer" />
+                  <div className="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+                    Advanced
+                  </div>
+                  <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+                    <p>{fileData.get}</p>
+                  </div>
+                </div>
+              </tr> */}
             </tbody>
           </table>
 

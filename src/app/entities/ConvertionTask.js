@@ -1,11 +1,11 @@
 import { fileTypeFromStream } from "file-type";
 import { FileFormat } from "./FileFormat";
 /**
- * Enum for common colors.
+ * Enum for common conversion status.
  * @readonly
  * @enum {{name: string}}
  */
-const Status = Object.freeze({
+const ConversionStatus = Object.freeze({
   NONE: { name: "none" },
   PROCESSING: { name: "processing" },
   DONE: { name: "done" },
@@ -15,7 +15,7 @@ const Status = Object.freeze({
 class ConversionTask {
   constructor({ file, targetFormat, id }) {
     this.id = id;
-    this.status = Status.NONE;
+    this.status = ConversionStatus.NONE;
     this.file = file;
     this.targetFormat = targetFormat;
     this.sourceFormat = null;
@@ -26,13 +26,23 @@ class ConversionTask {
     this.logs = [];
   }
 
+  updateFileFormat(newTargetFormat) {
+    if (this.targetFormat) {
+      this.logs = [];
+      this.status = ConversionStatus.NONE;
+      this.converted = null;
+      this.requestArguments = new Map();
+    }
+    this.targetFormat = newTargetFormat;
+  }
+
   getOutputFileName() {
     const originalFileName = this.file.name;
     const pos = originalFileName.includes(".")
       ? originalFileName.lastIndexOf(".")
       : originalFileName.length;
     const fileRoot = originalFileName.substr(0, pos);
-    return `${fileRoot}.${this.targetFormat.extension}`;
+    return `${fileRoot}_output.${this.targetFormat.extension}`;
   }
 
   iteratorToStream(iterator) {
@@ -55,6 +65,7 @@ class ConversionTask {
     const allFileFormats = FileFormat.getAllValues();
     const result = await fileTypeFromStream(this.file.stream());
     var ext = this.file.name.split(".").pop();
+
     if (!result) {
       //in case we couldn't get the file type using mime
       // we will try to find its extension.
@@ -63,15 +74,22 @@ class ConversionTask {
           (f) => f.extension == ext || f.exExtension?.includes(result?.ext),
         );
         if (fileFormatByExtension) {
+          this.sourceFormat = fileFromat;
           return fileFormatByExtension;
         }
       }
     } else if (!result.ext && result.mime) {
-      if (result.mime.includes("image")) return FileFormat.UNKNOWN_IMAGE;
-      if (result.mime.includes("video")) return FileFormat.UNKNOWN_VIDEO;
-      if (result.mime.includes("audio")) return FileFormat.UNKNOWN_AUDIO;
+      if (result.mime.includes("image")) {
+        this.sourceFormat = FileFormat.UNKNOWN_IMAGE;
+      } else if (result.mime.includes("video")) {
+        this.sourceFormat = FileFormat.UNKNOWN_VIDEO;
+      } else if (result.mime.includes("audio")) {
+        this.sourceFormat = FileFormat.UNKNOWN_AUDIO;
+      } else {
+        this.sourceFormat = FileFormat.UNKNOWN;
+      }
 
-      return FileFormat.UNKNOWN;
+      return this.sourceFormat;
     }
     if (result?.ext) {
       ext = result.ext;
@@ -92,10 +110,12 @@ class ConversionTask {
     const errorLastIndex = this.logs.findIndex((event) => {
       return event.message.includes("Aborted()");
     });
-
+    if (!errorLastIndex || errorLastIndex < 2) {
+      return this.logs.join(",");
+    }
     console.log("errorLastIndex", this.logs[errorLastIndex]);
 
     return `${this.logs[errorLastIndex - 2]?.message} \n ${this.logs[errorLastIndex - 1]?.message}`;
   }
 }
-export { ConversionTask, Status };
+export { ConversionTask, ConversionStatus };

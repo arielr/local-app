@@ -8,7 +8,7 @@ import {
 import FileUpload from "../ui/FileUploader";
 import AppBar from "../ui/AppBar";
 import ConversionTaskItem from "../ui/ConversionTaskItem/index.js";
-import { ConversionTask, Status } from "../entities/ConvertionTask";
+import { ConversionTask, ConversionStatus } from "../entities/ConvertionTask";
 import MediaConvertor from "../utils/mediaConvertor";
 import FilesUtils from "../utils/filesUtils";
 
@@ -17,12 +17,14 @@ import FilesUtils from "../utils/filesUtils";
  * */
 export default function FilesConvertionScreen({ inputFiles }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [isFfmpegIsLoaded, setIsFfmpegIsLoaded] = useState(false);
   const inputFileRef = useRef(null);
   const mediaConvertor = useRef(new MediaConvertor());
 
   useEffect(() => {
     mediaConvertor.current.load().then(() => {
       console.log("loaded!!");
+      setIsFfmpegIsLoaded(true);
     });
     handleSelectedFiles(inputFiles);
   }, []);
@@ -53,7 +55,6 @@ export default function FilesConvertionScreen({ inputFiles }) {
   }
 
   const files_list = selectedFiles.map((file, index) => {
-    console.log("selectedFiles", selectedFiles);
     return (
       <ConversionTaskItem
         key={index}
@@ -68,32 +69,26 @@ export default function FilesConvertionScreen({ inputFiles }) {
     for (let index = 0; index < selectedFiles.length; index++) {
       const fileData = selectedFiles[index];
       if (!fileData.targetFormat || fileData.outputFile) {
-        console.log("skipping", fileData);
         continue;
       }
 
-      fileData.status = Status.PROCESSING;
+      fileData.status = ConversionStatus.PROCESSING;
       setSelectedFiles((prevState) => [...prevState]);
       const result = await mediaConvertor.current
         .convert(fileData)
         .catch((error) => {
-          console.error(error);
-          fileData.status = Status.ERROR;
+          fileData.status = ConversionStatus.ERROR;
           fileData.error = error;
+          setSelectedFiles((prevState) => [...prevState]);
         });
-      if (result) {
-        selectedFiles[index].converted = result;
-        fileData.status = Status.DONE;
-      }
-
-      setSelectedFiles((prevState) => [...prevState]);
+      fileData.converted = result;
+      updateItem(fileData);
     }
   }
 
   function addMoreFiles(e) {
     const files = inputFileRef.current.files;
-    // console.log(files);
-    // console.log(inputFileRef.current);
+
     const fileDataList = Array.from(files).map((file, index) => {
       return new ConversionTask({ file: file, fileFormat: null, id: index });
     });
@@ -101,6 +96,9 @@ export default function FilesConvertionScreen({ inputFiles }) {
   }
 
   const isFilesConverted = (files) => files.some((f) => f.converted != null);
+  const isSomeFileIsConvertingMode = selectedFiles?.some(
+    (f) => f.status == ConversionStatus.PROCESSING,
+  );
   return (
     <div className="flex w-full justify-center">
       {selectedFiles.length == 0 && (
@@ -133,10 +131,14 @@ export default function FilesConvertionScreen({ inputFiles }) {
               </button>
 
               <button
-                onClick={convertFiles}
+                onClick={
+                  isSomeFileIsConvertingMode
+                    ? () => mediaConvertor.current?.terminateCurrentJobs()
+                    : convertFiles
+                }
                 className="btn btn-secondary m-4 lg:btn-lg"
               >
-                {selectedFiles.some((f) => f.status == Status.PROCESSING) ? (
+                {isSomeFileIsConvertingMode ? (
                   <>
                     <span className="loading loading-spinner loading-md" />
                     <p>Converting</p>

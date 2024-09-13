@@ -12,7 +12,7 @@ const formats = [
 
 const ExtensionSearchBar = ({ searchText, setSearchText }) => (
   <div className="w-full sm:border-b-2">
-    <label className="input input-ghost flex items-center p-4">
+    <label className="input input-ghost flex items-center justify-center p-4">
       <input
         type="text"
         value={searchText}
@@ -66,7 +66,7 @@ const FormatsOptions = ({
   selectedFormat,
   updateFormat,
 }) => (
-  <ul className="menu grid grid-cols-3 gap-2 overflow-auto">
+  <ul className="menu grid grid-cols-3 gap-2 overflow-auto rounded-xl">
     {getSupportedFormats().map((format, index) => (
       <li
         className={classNames("text-neutral", {
@@ -78,7 +78,6 @@ const FormatsOptions = ({
           className="truncate"
           onClick={() => {
             updateFormat(format);
-            console.log("asdfasdfasfasdfa");
             document.getElementById("my_modal_4")?.close();
           }}
         >
@@ -89,7 +88,40 @@ const FormatsOptions = ({
   </ul>
 );
 
-const TargetFormatDropdown = ({ sourceFormat, updateSelectedFormat }) => {
+const FileCategoryTabMenu = ({
+  formatOptions,
+  getSupportedFormats,
+  selectedFormatType,
+  setSelectedFormatType,
+}) => (
+  <div role="tablist" className="tabs tabs-bordered w-full">
+    {formatOptions?.map((f, index) => {
+      const categoryName = f[0];
+      return (
+        <a
+          key={`${categoryName}_${index}`}
+          role="tab"
+          // key={categoryName}
+          className={classNames("tab", {
+            "tab-active": index == selectedFormatType,
+            "text-base-300": getSupportedFormats(index).length == 0,
+          })}
+          onClick={() => {
+            setSelectedFormatType(index);
+          }}
+        >
+          {categoryName}
+        </a>
+      );
+    })}
+  </div>
+);
+
+const TargetFormatDropdown = ({
+  disabled,
+  sourceFormat,
+  updateSelectedFormat,
+}) => {
   const [selectedFormat, setSelectedFormat] = useState(null);
   const [selectedFormatType, setSelectedFormatType] = useState(0);
   const [searchText, setSearchText] = useState("");
@@ -111,16 +143,10 @@ const TargetFormatDropdown = ({ sourceFormat, updateSelectedFormat }) => {
   }, [sourceFormat]);
 
   useEffect(() => {
-    for (var i = 0; i < formatOptions?.length; i++) {
-      const currnetIndex = (selectedFormatType + i) % 3;
-      if (getSupportedFormats(currnetIndex)?.length != 0) {
-        setSelectedFormatType(currnetIndex);
-        return;
-      }
+    if (searchText.length > 0) {
+      setSearchText("");
     }
-    setSelectedFormatType(0);
-  }, [searchText]);
-
+  }, [selectedFormat]);
   function updateFormat(selectedFormat) {
     const elem = document.activeElement;
     if (elem) {
@@ -139,44 +165,36 @@ const TargetFormatDropdown = ({ sourceFormat, updateSelectedFormat }) => {
     return (
       <>
         <div
-          onClick={() => document.getElementById("my_modal_4").showModal()}
+          onClick={
+            disabled
+              ? () => {}
+              : () => document.getElementById("my_modal_4").showModal()
+          }
           tabIndex={0}
           role="button"
-          className="sm:btn-xl btn btn-sm sm:btn-md"
+          className={classNames("sm:btn-xl btn btn-sm sm:btn-md", {
+            "btn-disabled": disabled,
+          })}
         >
           {selectedFormat ? selectedFormat.name : "..."}
           <AiOutlineDown />
         </div>
         <dialog id="my_modal_4" className="modal">
-          <div className="modal-box w-11/12 max-w-5xl">
+          <div className="modal-box h-1/2 w-11/12 max-w-5xl">
             <ExtensionSearchBar
               searchText={searchText}
               setSearchText={setSearchText}
             />
 
-            {/* <h3 className="text-lg font-bold">Hello!</h3> */}
-            <div role="tablist" className="tabs tabs-bordered w-full">
-              {formatOptions?.map((f, index) => {
-                const categoryName = f[0];
-                return (
-                  <a
-                    key={`${categoryName}_${index}`}
-                    role="tab"
-                    // key={categoryName}
-                    className={classNames("tab", {
-                      "tab-active": index == selectedFormatType,
-                      "text-base-300": getSupportedFormats(index).length == 0,
-                    })}
-                    onClick={() => {
-                      setSelectedFormatType(index);
-                    }}
-                  >
-                    {categoryName}
-                  </a>
-                );
-              })}
-            </div>
-
+            {searchText.length == 0 && (
+              <FileCategoryTabMenu
+                formatOptions={formatOptions}
+                getSupportedFormats={getSupportedFormats}
+                selectedFormatType={selectedFormatType}
+                setSelectedFormatType={setSelectedFormatType}
+              />
+            )}
+            <div className="h-4"></div>
             <FormatsOptions
               getSupportedFormats={() =>
                 getSupportedFormats(selectedFormatType)
@@ -184,13 +202,10 @@ const TargetFormatDropdown = ({ sourceFormat, updateSelectedFormat }) => {
               selectedFormat={selectedFormat}
               updateFormat={updateFormat}
             />
-            <div className="modal-action">
-              <form method="dialog">
-                {/* if there is a button, it will close the modal */}
-                <button className="btn">Close</button>
-              </form>
-            </div>
           </div>
+          <form method="dialog" className="modal-backdrop">
+            <button onClick={() => setSearchText("")}>close</button>
+          </form>
         </dialog>
       </>
     );
@@ -200,25 +215,29 @@ const TargetFormatDropdown = ({ sourceFormat, updateSelectedFormat }) => {
       <div
         tabIndex={0}
         role="button"
-        className="sm:btn-xl btn btn-sm sm:btn-md"
+        className={classNames("sm:btn-xl btn btn-sm sm:btn-md", {
+          "btn-disabled": disabled,
+        })}
       >
         {selectedFormat ? selectedFormat.name : "..."}
         <AiOutlineDown />
       </div>
       <div
         tabIndex={0}
-        className="justify-centerrounded-box menu dropdown-content z-10 flex flex-row space-y-4 bg-base-100 px-2 shadow sm:w-96"
+        className="menu dropdown-content z-10 flex flex-row justify-center space-y-4 rounded-box bg-base-100 px-4 shadow sm:w-96"
       >
         <ExtensionSearchBar
           searchText={searchText}
           setSearchText={setSearchText}
         />
 
-        <FileCategoryOptions
-          formatOptions={formatOptions}
-          selectedFormatType={selectedFormatType}
-          setSelectedFormatType={setSelectedFormatType}
-        />
+        {searchText.length == 0 && (
+          <FileCategoryOptions
+            formatOptions={formatOptions}
+            selectedFormatType={selectedFormatType}
+            setSelectedFormatType={setSelectedFormatType}
+          />
+        )}
         <div className="w-4/5">
           <FormatsOptions
             getSupportedFormats={() => getSupportedFormats(selectedFormatType)}
@@ -231,13 +250,8 @@ const TargetFormatDropdown = ({ sourceFormat, updateSelectedFormat }) => {
   );
 
   function getSupportedFormats(formatTypeIndex) {
-    console.log(formatOptions);
     if (formatOptions == undefined || formatOptions.length == 0) return [];
-    console.log(
-      "getSupportedFormats",
-      formatOptions[formatTypeIndex],
-      formatTypeIndex,
-    );
+
     return formatOptions[formatTypeIndex][1]?.filter((f) => {
       return (
         searchText.length == 0 ||

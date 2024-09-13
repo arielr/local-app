@@ -32,9 +32,17 @@ const FileUpload = ({ setFiles }) => {
         <input {...getInputProps()} />
         <div className="flex h-full min-h-44 w-full flex-col items-center justify-center space-y-2 p-4">
           <AiOutlineUpload className="size-12" />
-          <button className="bg-transparent-20 btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white opacity-75 hover:-translate-x-1 hover:-translate-y-1">
-            Select Files
-          </button>
+
+          <a
+            href="#_"
+            className="group relative inline-block rounded px-5 py-2.5 font-medium text-white"
+          >
+            <span className="absolute left-0 top-0 h-full w-full rounded bg-gradient-to-br from-purple-600 to-blue-500 opacity-50 blur-sm filter"></span>
+            <span className="absolute inset-0 ml-0.5 mt-0.5 h-full w-full rounded bg-gradient-to-br from-purple-600 to-blue-500 opacity-50 filter group-active:opacity-0"></span>
+            <span className="absolute inset-0 h-full w-full rounded bg-gradient-to-br from-purple-600 to-blue-500 shadow-xl filter transition-all duration-200 ease-out group-hover:blur-sm group-active:opacity-0"></span>
+            <span className="absolute inset-0 h-full w-full rounded bg-gradient-to-br from-blue-500 to-purple-600 transition duration-200 ease-out"></span>
+            <span className="relative">Select Files</span>
+          </a>
           <p className="item-center flex justify-center font-bricolage-grotesque">
             Drag and drop files here
           </p>

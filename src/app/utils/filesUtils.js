@@ -14,7 +14,6 @@ class FilesUtils {
     FilesUtils.downloadFile(new File([content], outputFileName));
   }
   static downloadFile(file) {
-    console.log(file);
     const url = URL.createObjectURL(file);
     const a = document.createElement("a");
     a.href = url;
