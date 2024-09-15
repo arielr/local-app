@@ -32,6 +32,7 @@ class ConversionTask {
       this.status = ConversionStatus.NONE;
       this.converted = null;
       this.requestArguments = new Map();
+    
     }
     this.targetFormat = newTargetFormat;
   }

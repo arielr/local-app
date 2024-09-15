@@ -136,7 +136,7 @@ const ConversionTaskItem = ({ fileData, updateItem, removeItem }) => {
           disabled={status == ConversionStatus.PROCESSING}
           sourceFormat={sourceFormat}
           updateSelectedFormat={(newFileFormat) => {
-            console.log("TargetFormatDropdown", newFileFormat);
+            setProgress(0)
             fileData.updateFileFormat(newFileFormat);
             updateItem(fileData);
           }}
