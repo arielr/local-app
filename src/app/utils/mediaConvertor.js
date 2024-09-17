@@ -2,6 +2,7 @@ import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile, toBlobURL } from "@ffmpeg/util";
 import FfMpegCommandBuilder from "./ffmpegCommandBuilder";
 import { ConversionStatus } from "../entities/ConvertionTask";
+import { get, set } from "idb-keyval";
 const FFMPEG_SUCCESS = 0;
 
 /**
@@ -23,6 +24,23 @@ class MediaConvertor {
     this.loadingPromise = null;
   }
 
+  async getFromCacheOrDownload(key, blobGetter) {
+    return get(key).then((res) => {
+      console.log(res);
+      if (res == undefined) {
+        return blobGetter().then((wasm) => {
+          console.log(blob);
+          set(key, blob);
+          return URL.createObjectURL(
+            new Blob([wasm], { type: "application/wasm" }),
+          );
+        });
+      } else {
+        return res;
+      }
+    });
+  }
+
   async load() {
     if (this.status != MediaConvertorStatus.NOT_READY) return;
 
@@ -35,10 +53,20 @@ class MediaConvertor {
       `${baseURL}/ffmpeg-core.js`,
       "text/javascript",
     );
-    const wasmUrlPromise = toBlobURL(
-      `${baseURL}/ffmpeg-core.wasm`,
-      "application/wasm",
-    );
+
+    const wasmUrlPromise = get("ffmpeg-core.wasm").then((res) => {
+      if (!res) {
+        return fetchFile(`${baseURL}/ffmpeg-core.wasm`).then((res) => {
+          set("ffmpeg-core.wasm", res);
+          return URL.createObjectURL(
+            new Blob([res], { type: "application/wasm" }),
+          );
+        });
+      }
+      console.log("loading from cache");
+      return URL.createObjectURL(new Blob([res], { type: "application/wasm" }));
+    });
+
     const workerUrlPromise = toBlobURL(
       `${baseURL}/ffmpeg-core.worker.js`,
       "text/javascript",
@@ -50,6 +78,8 @@ class MediaConvertor {
       wasmURL: await wasmUrlPromise,
       workerURL: await workerUrlPromise,
     });
+
+    console.log(await wasmUrlPromise);
     this.status = MediaConvertorStatus.LOADED;
     this.loadingPromise = result;
     return await result;
