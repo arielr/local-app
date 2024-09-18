@@ -5,19 +5,12 @@ import FileUpload from "./ui/FileUploader";
 import AppBar from "./ui/AppBar";
 import AdvantageCards from "./ui/AdvantageCards";
 import FilesConvertionScreen from "./screen/FilesConvertionScreen";
-import CacheManager from "./utils/cacheManager";
 
 /**
  * 1) Split the class to real home page and the seocond one to ConvertionScreen?
  * */
 export default function Home() {
   const [selectedFiles, setSelectedFiles] = useState([]);
-
-  // var a = new CacheManager();
-  // a.init().then((res)=>{
-  //   console.log("CacheManager", "LOADED!")
-  //   a.put('ariel', 'roasso');
-  // });
 
   // function handleSelectedFiles(files) {
   //   const fileDataList = files.map((file, index) => {
